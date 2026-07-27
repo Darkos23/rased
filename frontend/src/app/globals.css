@@ -1,0 +1,184 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+:root {
+  /* Fixed navbar height fallback (overridden by Navbar via JS once mounted,
+     to account for the verification banner when it's shown) */
+  --nav-height: 80px;
+
+  /* Backgrounds */
+  --ui-bg:     #f8fafc;
+  --ui-panel:  #ffffff;
+  --ui-border: #e2e8f0;
+  --ui-text:   #0f172a;
+  --ui-muted:  #64748b;
+
+  /* Brand — RASED teal (from the official seal) */
+  --brand-50:  #eef6f4;
+  --brand-100: #d9ece6;
+  --brand-200: #b0d8cc;
+  --brand-400: #5a9c8a;
+  --brand-500: #3d8271;
+  --brand-600: #2c6a5b;
+  --brand-700: #1f4a41;
+  --brand-800: #163a33;
+  --brand-900: #0d2621;
+
+  /* Accent — seal gold */
+  --accent:            #B8923A;
+  --accent-foreground: #ffffff;
+
+  /* Shadows */
+  --shadow-soft:  0 2px 12px rgba(0,0,0,0.06);
+  --shadow-float: 0 20px 60px rgba(0,0,0,0.12);
+  --shadow-hover: 0 12px 40px rgba(31,74,65,0.18);
+}
+
+@theme inline {
+  /* Background & panels */
+  --color-ui-bg:     var(--ui-bg);
+  --color-ui-panel:  var(--ui-panel);
+  --color-ui-border: var(--ui-border);
+  --color-ui-text:   var(--ui-text);
+  --color-ui-muted:  var(--ui-muted);
+
+  /* Brand palette */
+  --color-brand-50:  var(--brand-50);
+  --color-brand-100: var(--brand-100);
+  --color-brand-200: var(--brand-200);
+  --color-brand-400: var(--brand-400);
+  --color-brand-500: var(--brand-500);
+  --color-brand-600: var(--brand-600);
+  --color-brand-700: var(--brand-700);
+  --color-brand-800: var(--brand-800);
+  --color-brand-900: var(--brand-900);
+
+  /* Accent */
+  --color-accent:            var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  /* Fonts */
+  --font-outfit: var(--font-outfit-var), 'Outfit', sans-serif;
+  --font-sans:   var(--font-jakarta-var), 'Plus Jakarta Sans', -apple-system, sans-serif;
+
+  /* Shadows */
+  --shadow-soft:  var(--shadow-soft);
+  --shadow-float: var(--shadow-float);
+  --shadow-hover: var(--shadow-hover);
+
+  /* Animations */
+  --animate-blob:         blob 7s infinite;
+  --animate-float-slow:   float 6s ease-in-out infinite;
+  --animate-float-delayed: float 6s ease-in-out 1.5s infinite;
+
+  /* Keyframes */
+  @keyframes blob {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33%       { transform: translate(30px, -50px) scale(1.1); }
+    66%       { transform: translate(-20px, 20px) scale(0.9); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50%       { transform: translateY(-12px); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes growWidth {
+    from { width: 0%; }
+    to   { width: 100%; }
+  }
+}
+
+body {
+  background-color: var(--ui-bg);
+  color: var(--ui-text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+.glass-nav {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, var(--brand-600), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.bg-grid-pattern {
+  background-size: 40px 40px;
+  background-image:
+    linear-gradient(to right, rgba(15,23,42,0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15,23,42,0.03) 1px, transparent 1px);
+}
+
+/* ── TipTap rich text editor ── */
+.tiptap p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  color: #94a3b8;
+  pointer-events: none;
+  float: left;
+  height: 0;
+}
+
+.tiptap a {
+  color: var(--brand-600);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.tiptap blockquote {
+  border-left: 3px solid var(--brand-200);
+  padding-left: 1rem;
+  color: var(--ui-muted);
+  font-style: italic;
+}
+
+.tiptap code {
+  background: #f1f5f9;
+  padding: 0.1em 0.3em;
+  border-radius: 4px;
+  font-size: 0.875em;
+  font-family: ui-monospace, monospace;
+}
+
+.tiptap pre {
+  background: #1e293b;
+  color: #e2e8f0;
+  padding: 1rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-size: 0.875em;
+}
+
+.tiptap pre code {
+  background: none;
+  padding: 0;
+  color: inherit;
+}
+
+.tiptap hr {
+  border: none;
+  border-top: 1px solid var(--ui-border);
+  margin: 1.5rem 0;
+}
+
+/* ── TipTap content rendered in article pages ── */
+.article-body h2 { font-size: 1.375rem; font-weight: 700; margin-top: 2rem; margin-bottom: 0.75rem; color: var(--ui-text); }
+.article-body h3 { font-size: 1.125rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.5rem; color: var(--ui-text); }
+.article-body p  { margin-bottom: 1rem; line-height: 1.75; color: #334155; }
+.article-body ul, .article-body ol { padding-left: 1.5rem; margin-bottom: 1rem; }
+.article-body li { margin-bottom: 0.25rem; line-height: 1.75; }
+.article-body ul li { list-style-type: disc; }
+.article-body ol li { list-style-type: decimal; }
+.article-body strong { font-weight: 600; color: var(--ui-text); }
+.article-body a { color: var(--brand-600); text-decoration: underline; }
+.article-body blockquote { border-left: 3px solid var(--brand-200); padding-left: 1rem; color: var(--ui-muted); font-style: italic; margin: 1.5rem 0; }
+.article-body code { background: #f1f5f9; padding: 0.1em 0.3em; border-radius: 4px; font-size: 0.875em; font-family: ui-monospace, monospace; }
+.article-body pre { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 8px; overflow-x: auto; font-size: 0.875em; margin-bottom: 1rem; }
+.article-body hr { border: none; border-top: 1px solid var(--ui-border); margin: 2rem 0; }
