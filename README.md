@@ -1,13 +1,13 @@
 # Projet Fastef - Spécifications Techniques
 
-Ce document s'adresse aux équipes techniques et d'infrastructure chargées d'évaluer et de déployer le projet **Fastef** sur les serveurs de l'UCAD.
+Ce document s'adresse aux équipes techniques et d'infrastructure chargées d'évaluer et de déployer le projet **RESAD** sur les serveurs de l'UCAD.
 
-## 🎯 Description du Projet
+##  Description du Projet
 L'application Fastef est une plateforme web moderne conçue pour gérer des contenus et processus spécifiques à la faculté. Son architecture repose sur un modèle **Client-Serveur Découplé**, séparant un Backend orienté API (Headless) et un Frontend réactif gérant l'interface utilisateur.
 
 ---
 
-## 🏗️ Architecture et Stack Technologique
+##  Architecture et Stack Technologique
 
 ### 1. Backend (Moteur API REST)
 Le backend sert exclusivement d'API pour le frontend. Il gère la logique métier, l'authentification et l'accès à la base de données.
@@ -24,7 +24,7 @@ Le frontend consomme l'API Laravel et se charge du rendu de l'application côté
 
 ---
 
-## ⚙️ Prérequis d'Hébergement (Production)
+##  Prérequis d'Hébergement (Production)
 
 Pour héberger ce projet dans vos infrastructures, voici les prérequis serveurs :
 
@@ -44,7 +44,7 @@ Next.js utilise le rendu hybride (SSR - Server Side Rendering) et nécessite don
 
 ---
 
-## 📦 Processus de Déploiement Simplifié
+##  Processus de Déploiement Simplifié
 
 1. **Backend :** Cloner le dossier `backend`, exécuter `composer install --optimize-autoloader --no-dev`, configurer le `.env` pour la base de données de production, et pointer le serveur web (Nginx/Apache) sur le dossier `backend/public`.
 2. **Frontend :** Cloner le dossier `frontend`, exécuter `npm install`, configurer le `.env` pour pointer vers l'URL publique de l'API Laravel, puis builder le projet avec `npm run build`. Enfin, lancer l'application via `pm2 start npm --name "fastef-front" -- run start`.
