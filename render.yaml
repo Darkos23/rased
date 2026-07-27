@@ -1,0 +1,35 @@
+services:
+  # 1. Base de données gratuite
+  - type: pserv
+    name: fastef-db
+    env: postgres
+    plan: free
+    databaseName: fastef
+    user: fastef_user
+
+  # 2. Serveur Backend Laravel (API)
+  - type: web
+    name: fastef-api
+    env: docker
+    plan: free
+    region: frankfurt
+    rootDir: backend
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: APP_NAME
+        value: Fastef
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: APP_KEY
+        generateValue: true
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DATABASE_URL
+        fromDatabase:
+          name: fastef-db
+          property: internalConnectionString
+      # On autorise les requêtes de tous les sous-domaines (pour le frontend Vercel)
+      - key: CORS_ALLOWED_ORIGINS
+        value: "*"
