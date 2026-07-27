@@ -1,12 +1,10 @@
-services:
+databases:
   # 1. Base de données gratuite
-  - type: pserv
-    name: fastef-db
-    env: postgres
+  - name: fastef-db
     plan: free
-    databaseName: fastef
-    user: fastef_user
+    region: frankfurt
 
+services:
   # 2. Serveur Backend Laravel (API)
   - type: web
     name: fastef-api
