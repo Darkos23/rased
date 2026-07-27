@@ -27,7 +27,7 @@ services:
       - key: DATABASE_URL
         fromDatabase:
           name: fastef-db
-          property: internalConnectionString
+          property: connectionString
       # On autorise les requêtes de tous les sous-domaines (pour le frontend Vercel)
       - key: CORS_ALLOWED_ORIGINS
         value: "*"
