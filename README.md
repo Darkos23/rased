@@ -1,6 +1,6 @@
 # Projet Fastef - Spécifications Techniques
 
-Ce document s'adresse aux équipes techniques et d'infrastructure chargées d'évaluer et de déployer le projet **RESAD** sur les serveurs de l'UCAD.
+Ce document s'adresse aux équipes techniques et d'infrastructure chargées d'évaluer et de déployer le projet **RASED** sur les serveurs de l'UCAD.
 
 ##  Description du Projet
 L'application Fastef est une plateforme web moderne conçue pour gérer des contenus et processus spécifiques à la faculté. Son architecture repose sur un modèle **Client-Serveur Découplé**, séparant un Backend orienté API (Headless) et un Frontend réactif gérant l'interface utilisateur.
