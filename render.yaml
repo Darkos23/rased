@@ -28,6 +28,21 @@ services:
         fromDatabase:
           name: fastef-db
           property: connectionString
-      # On autorise les requêtes de tous les sous-domaines (pour le frontend Vercel)
+      # On autorise les requêtes de tous les sous-domaines
       - key: CORS_ALLOWED_ORIGINS
         value: "*"
+
+  # 3. Serveur Frontend Next.js (Interface)
+  - type: web
+    name: fastef-frontend
+    env: node
+    plan: free
+    region: frankfurt
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: NEXT_PUBLIC_API_URL
+        value: https://fastef-api.onrender.com
