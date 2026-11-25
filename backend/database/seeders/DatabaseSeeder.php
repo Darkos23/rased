@@ -223,5 +223,11 @@ class DatabaseSeeder extends Seeder
                 'status'       => $mData['status'],
             ]);
         }
+
+        $this->call([
+            MemberSeeder::class,
+            CommissionSeeder::class,
+            HeroSlideSeeder::class,
+        ]);
     }
 }
