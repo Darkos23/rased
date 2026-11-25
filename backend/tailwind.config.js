@@ -15,6 +15,8 @@ export default {
             fontFamily: {
                 sans: ['"Plus Jakarta Sans"', ...defaultTheme.fontFamily.sans],
                 outfit: ['Outfit', ...defaultTheme.fontFamily.sans],
+                display: ['Outfit', ...defaultTheme.fontFamily.sans],
+                serif: ['Newsreader', 'Georgia', 'serif'],
             },
             colors: {
                 brand: {
@@ -38,6 +40,30 @@ export default {
                     border: '#e2e8f0',
                     muted: '#64748b',
                     text: '#0f172a',
+                },
+                rased: {
+                    950: '#071915',
+                    900: '#0d2621',
+                    800: '#163b33',
+                    700: '#1f5146',
+                    600: '#2c6a5b',
+                    500: '#3d8271',
+                    200: '#bce0d6',
+                    100: '#d9ece6',
+                    50: '#eef6f4',
+                },
+                gold: {
+                    700: '#8c6b22',
+                    600: '#a67f2e',
+                    500: '#b8923a',
+                    400: '#cfa952',
+                    100: '#f6eedb',
+                    50: '#fbf8f0',
+                },
+                ivory: {
+                    50: '#faf9f5',
+                    100: '#f3f0e8',
+                    200: '#e5e0d3',
                 },
             },
         },

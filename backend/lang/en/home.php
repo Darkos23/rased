@@ -28,4 +28,38 @@ return [
     'see_meetings' => 'View schedule',
     'articles_n' => 'publications',
     'meetings_n' => 'events',
+
+    'badge2' => 'Pan-African Network · West Africa, Maghreb & International',
+    'title_line1' => 'Explore, unite,',
+    'title_accent' => 'advance.',
+    'subtitle2' => 'The official institutional portal of RASED — collaborative research, joint doctoral schools, peer-reviewed publishing, and inter-university cooperation across Africa and beyond.',
+    'cta_primary' => 'Explore Journal & Publications',
+    'cta_secondary' => 'Discover Governance & Members',
+    'watch_report' => 'Watch the Nouakchott Broadcast',
+    'official_broadcast' => 'Official TV Broadcast',
+
+    'stats2' => [
+        ['value' => '03', 'label' => 'Founding Hubs', 'sub' => 'Dakar · Rabat · Nouakchott'],
+        ['value' => '06', 'label' => 'Standing Commissions', 'sub' => 'Internal Bylaws, art. 53-55'],
+        ['value' => '05', 'label' => 'Statutory Categories', 'sub' => 'Open to institutions & scholars'],
+        ['value' => '04', 'label' => 'Governing Bodies', 'sub' => 'Collegial rotating governance'],
+    ],
+
+    'missions' => [
+        ['number' => '01', 'title' => 'Strengthen scientific cooperation among African institutions in education sciences', 'detail' => 'Build enduring academic bridges across faculties of education, teacher training colleges, and research centers.'],
+        ['number' => '02', 'title' => 'Consolidate network governance and strategic orientations', 'detail' => 'Ensure collegial, transparent, and regionally balanced institutional stewardship.'],
+        ['number' => '03', 'title' => 'Launch collaborative research projects across member institutions', 'detail' => 'Form multinational research consortia addressing contemporary educational challenges across Africa.'],
+        ['number' => '04', 'title' => 'Develop joint doctoral schools', 'detail' => 'Pool doctoral supervision, methodological seminars, and joint thesis programs across universities.'],
+        ['number' => '05', 'title' => 'Host an annual international summer university', 'detail' => 'Convene senior scholars, early-career faculty, and doctoral candidates on a rotating campus basis.'],
+        ['number' => '06', 'title' => 'Facilitate the accession of new partner institutions', 'detail' => "Welcome higher education and research institutions sharing RASED's scientific charter."],
+        ['number' => '07', 'title' => 'Stand as a benchmark African forum in education sciences', 'detail' => 'Amplify African scholarship globally through peer-reviewed publishing and international symposia.'],
+    ],
+
+    'categories' => [
+        ['code' => 'Cat. I', 'name' => 'Founding Members', 'description' => 'Signatory institutions of the founding charter (FASTEF-UCAD, FSE Rabat, ENS Nouakchott).', 'article' => 'Art. 9-10'],
+        ['code' => 'Cat. II', 'name' => 'Full Institutional Members', 'description' => 'African faculties of education, Écoles Normales Supérieures, and public teacher-research institutes.', 'article' => 'Art. 11'],
+        ['code' => 'Cat. III', 'name' => 'Associate Members', 'description' => 'Research laboratories, partner institutes, and international academic organizations.', 'article' => 'Art. 12'],
+        ['code' => 'Cat. IV', 'name' => 'Individual Scholars', 'description' => 'Faculty researchers, PhDs, and education specialists affiliated with scientific commissions.', 'article' => 'Art. 13'],
+        ['code' => 'Cat. V', 'name' => 'Honorary Members', 'description' => 'Distinguished academic figures recognized by the General Assembly for outstanding contributions.', 'article' => 'Art. 14'],
+    ],
 ];

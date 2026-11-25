@@ -28,4 +28,38 @@ return [
     'see_meetings' => "Voir l'agenda",
     'articles_n' => 'publications',
     'meetings_n' => 'événements',
+
+    'badge2' => "Réseau panafricain · Afrique de l'Ouest, Maghreb & International",
+    'title_line1' => 'Explorez, fédérez,',
+    'title_accent' => 'rayonnez.',
+    'subtitle2' => "Le portail institutionnel officiel du RASED — recherche collaborative, écoles doctorales communes, revue scientifique et coopération académique entre institutions africaines et internationales.",
+    'cta_primary' => 'Explorer la Revue & Publications',
+    'cta_secondary' => 'Découvrir la Gouvernance & Membres',
+    'watch_report' => 'Voir le reportage de Nouakchott',
+    'official_broadcast' => 'Archive télévisée officielle',
+
+    'stats2' => [
+        ['value' => '03', 'label' => 'Pôles fondateurs', 'sub' => 'Dakar · Rabat · Nouakchott'],
+        ['value' => '06', 'label' => 'Commissions permanentes', 'sub' => 'Règlement intérieur, art. 53-55'],
+        ['value' => '05', 'label' => 'Catégories statutaires', 'sub' => "Ouvert aux institutions & chercheurs"],
+        ['value' => '04', 'label' => 'Organes dirigeants', 'sub' => 'Gouvernance tournante & collégiale'],
+    ],
+
+    'missions' => [
+        ['number' => '01', 'title' => "Renforcer la coopération scientifique entre institutions africaines en sciences de l'éducation", 'detail' => 'Structurer un dialogue permanent entre facultés, écoles normales supérieures et centres de recherche du continent.'],
+        ['number' => '02', 'title' => 'Consolider la gouvernance et les orientations stratégiques du réseau', 'detail' => 'Garantir un pilotage collégial, transparent et équilibré entre les grandes régions partenaires.'],
+        ['number' => '03', 'title' => 'Lancer des projets de recherche collaboratifs entre institutions membres', 'detail' => 'Constituer des consortiums scientifiques multinationaux répondant aux défis éducatifs contemporains.'],
+        ['number' => '04', 'title' => 'Développer des écoles doctorales communes', 'detail' => "Mutualiser l'encadrement doctoral, les séminaires méthodologiques et les co-tutelles de thèse."],
+        ['number' => '05', 'title' => "Organiser une université d'été annuelle", 'detail' => 'Offrir un rendez-vous académique tournant pour chercheurs confirmés, jeunes docteurs et doctorants.'],
+        ['number' => '06', 'title' => "Faciliter l'adhésion de nouvelles institutions partenaires", 'detail' => "Élargir progressivement le réseau aux établissements d'enseignement supérieur africains et internationaux."],
+        ['number' => '07', 'title' => 'Rayonner comme espace africain de référence en sciences de l’éducation', 'detail' => 'Valoriser la production scientifique africaine à travers une revue dédiée et des tribunes internationales.'],
+    ],
+
+    'categories' => [
+        ['code' => 'Cat. I', 'name' => 'Membres fondateurs', 'description' => "Institutions signataires de l'acte constitutif du RASED (FASTEF-UCAD, FSE Rabat, ENS Nouakchott).", 'article' => 'Art. 9-10'],
+        ['code' => 'Cat. II', 'name' => 'Membres titulaires', 'description' => 'Facultés, Écoles Normales Supérieures et instituts publics africains de formation et recherche en éducation.', 'article' => 'Art. 11'],
+        ['code' => 'Cat. III', 'name' => 'Membres associés', 'description' => "Laboratoires, centres de recherche et institutions partenaires d'Afrique et de l'international.", 'article' => 'Art. 12'],
+        ['code' => 'Cat. IV', 'name' => 'Membres individuels', 'description' => 'Enseignants-chercheurs, docteurs et experts rattachés ou agréés par les commissions scientifiques.', 'article' => 'Art. 13'],
+        ['code' => 'Cat. V', 'name' => "Membres d'honneur", 'description' => 'Personnalités académiques et institutionnelles distinguées pour leur contribution éminente au Réseau.', 'article' => 'Art. 14'],
+    ],
 ];
