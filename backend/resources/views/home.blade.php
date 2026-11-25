@@ -33,7 +33,8 @@ $dateFmt = fn ($date, $opts = []) => $date->locale($locale)->isoFormat($opts['fo
                             <span>{{ __('home.cta_primary') }}</span>
                             <span class="text-gold-400">→</span>
                         </a>
-                        <a href="{{ route('membres') }}" class="inline-flex items-center gap-2 px-5 py-3.5 rounded-full bg-white border border-rased-900/15 text-rased-950 font-bold text-sm hover:border-gold-500 hover:bg-gold-50/40 transition-all">
+                        <a href="{{ route('articles.create') }}" class="inline-flex items-center gap-2 px-5 py-3.5 rounded-full bg-white border border-rased-900/15 text-rased-950 font-bold text-sm hover:border-gold-500 hover:bg-gold-50/40 transition-all">
+                            <svg class="w-4 h-4 text-gold-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3l1.912 5.813a2 2 0 001.275 1.275L21 12l-5.813 1.912a2 2 0 00-1.275 1.275L12 21l-1.912-5.813a2 2 0 00-1.275-1.275L3 12l5.813-1.912a2 2 0 001.275-1.275L12 3z" /></svg>
                             <span>{{ __('home.cta_secondary') }}</span>
                         </a>
                     </div>
@@ -103,14 +104,19 @@ $dateFmt = fn ($date, $opts = []) => $date->locale($locale)->isoFormat($opts['fo
 
             {{-- Stats ribbon --}}
             <div class="mt-14 grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
-                @foreach (__('home.stats2') as $st)
-                    <div class="text-left rounded-2xl bg-white/92 border border-rased-900/10 px-5 py-4 sm:py-5 shadow-sm flex items-start gap-4">
+                @foreach ([
+                    ['value' => sprintf('%02d', $stats['members']), 'label' => __('home.stat_members_label'), 'sub' => __('home.stat_members_sub'), 'href' => route('membres')],
+                    ['value' => sprintf('%02d', $stats['commissions']), 'label' => __('home.stat_commissions_label'), 'sub' => __('home.stat_commissions_sub'), 'href' => route('commissions')],
+                    ['value' => sprintf('%02d', $stats['articles']), 'label' => __('home.stat_articles_label'), 'sub' => __('home.stat_articles_sub'), 'href' => route('articles.index')],
+                    ['value' => __('home.stat_categories_value'), 'label' => __('home.stat_categories_label'), 'sub' => __('home.stat_categories_sub'), 'href' => route('membres')],
+                ] as $st)
+                    <a href="{{ $st['href'] }}" class="text-left rounded-2xl bg-white/92 border border-rased-900/10 px-5 py-4 sm:py-5 shadow-sm hover:shadow-md hover:border-gold-500/45 hover:-translate-y-0.5 transition-all flex items-start gap-4">
                         <span class="font-display text-3xl sm:text-4xl font-extrabold text-rased-700 leading-none">{{ $st['value'] }}</span>
                         <div class="min-w-0">
                             <p class="font-display font-bold text-sm sm:text-base text-rased-950 leading-snug truncate">{{ $st['label'] }}</p>
                             <p class="text-[11px] sm:text-xs text-rased-900/55 mt-0.5 truncate">{{ $st['sub'] }}</p>
                         </div>
-                    </div>
+                    </a>
                 @endforeach
             </div>
         </div>
@@ -121,7 +127,12 @@ $dateFmt = fn ($date, $opts = []) => $date->locale($locale)->isoFormat($opts['fo
         <div class="grid md:grid-cols-3 gap-5">
             <a href="{{ route('articles.index') }}" class="group bg-white border border-rased-900/10 rounded-3xl p-7 sm:p-8 shadow-sm hover:shadow-xl hover:border-gold-500/45 hover:-translate-y-1 transition-all flex flex-col justify-between">
                 <div>
-                    <div class="w-12 h-12 rounded-2xl bg-gold-100 text-gold-700 flex items-center justify-center mb-6">📄</div>
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="w-12 h-12 rounded-2xl bg-gold-100 text-gold-700 flex items-center justify-center">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14 2v6h6M16 13H8M16 17H8M10 9H8" /></svg>
+                        </div>
+                        <span class="px-2.5 py-1 rounded-full bg-gold-50 text-gold-700 text-[11px] font-bold">{{ $stats['articles'] }} {{ $locale === 'fr' ? 'dossiers actifs' : 'active calls' }}</span>
+                    </div>
                     <h3 class="font-display text-xl font-bold text-rased-950 mb-2">{{ $locale === 'fr' ? 'Publications & Revue' : 'Publications & Journal' }}</h3>
                     <p class="text-sm text-rased-900/65 leading-relaxed mb-6">{{ $locale === 'fr' ? 'Articles de recherche, soumission directe de manuscrits et lancement de la Revue africaine des sciences de l’éducation.' : 'Research papers, live manuscript submission, and the African Journal of Education Sciences.' }}</p>
                 </div>
@@ -130,20 +141,30 @@ $dateFmt = fn ($date, $opts = []) => $date->locale($locale)->isoFormat($opts['fo
 
             <a href="{{ route('commissions') }}" class="group bg-white border border-rased-900/10 rounded-3xl p-7 sm:p-8 shadow-sm hover:shadow-xl hover:border-rased-500/45 hover:-translate-y-1 transition-all flex flex-col justify-between">
                 <div>
-                    <div class="w-12 h-12 rounded-2xl bg-rased-50 text-rased-700 flex items-center justify-center mb-6">🔬</div>
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="w-12 h-12 rounded-2xl bg-rased-50 text-rased-700 flex items-center justify-center">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 2v4M15 2v4M9 10h.01M9 14h.01M9 18h.01M12.5 22H6a2 2 0 01-2-2V6a2 2 0 012-2h12a2 2 0 012 2v3.5" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M18 15.5a3.5 3.5 0 100 7 3.5 3.5 0 000-7z" /></svg>
+                        </div>
+                        <span class="px-2.5 py-1 rounded-full bg-rased-50 text-rased-700 text-[11px] font-bold">{{ $stats['commissions'] }} {{ $locale === 'fr' ? 'commissions' : 'commissions' }}</span>
+                    </div>
                     <h3 class="font-display text-xl font-bold text-rased-950 mb-2">{{ $locale === 'fr' ? 'Commissions permanentes' : 'Standing Commissions' }}</h3>
                     <p class="text-sm text-rased-900/65 leading-relaxed mb-6">{{ $locale === 'fr' ? 'Recherche, écoles doctorales, mobilité internationale, transformation numérique, éthique et développement institutionnel.' : 'Research, doctoral schools, international mobility, digital transformation, ethics, and sustainability.' }}</p>
                 </div>
-                <span class="inline-flex items-center gap-1.5 text-xs font-bold text-rased-700 bg-rased-50 border border-rased-200 px-3.5 py-2 rounded-full w-fit">{{ $locale === 'fr' ? 'Voir les commissions' : 'View commissions' }} →</span>
+                <span class="inline-flex items-center gap-1.5 text-xs font-bold text-rased-700 bg-rased-50 border border-rased-200 px-3.5 py-2 rounded-full w-fit">{{ $locale === 'fr' ? 'Rejoindre une commission' : 'Join a commission' }} →</span>
             </a>
 
             <a href="{{ route('meetings.index') }}" class="group bg-white border border-rased-900/10 rounded-3xl p-7 sm:p-8 shadow-sm hover:shadow-xl hover:border-emerald-500/45 hover:-translate-y-1 transition-all flex flex-col justify-between">
                 <div>
-                    <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center mb-6">📹</div>
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                        </div>
+                        <span class="px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 text-[11px] font-bold">{{ $locale === 'fr' ? 'Vidéo & Directs' : 'Video & Live' }}</span>
+                    </div>
                     <h3 class="font-display text-xl font-bold text-rased-950 mb-2">{{ $locale === 'fr' ? 'Réunions & Séminaires' : 'Meetings & Seminars' }}</h3>
                     <p class="text-sm text-rased-900/65 leading-relaxed mb-6">{{ $locale === 'fr' ? 'Reportage TV officiel de Nouakchott, université d’été annuelle, séminaires en direct et inscriptions ouvertes.' : 'Official Nouakchott TV broadcast, annual Summer University, live seminars, and instant registration.' }}</p>
                 </div>
-                <span class="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-800 bg-emerald-50 border border-emerald-200 px-3.5 py-2 rounded-full w-fit">{{ $locale === 'fr' ? 'Voir l’agenda' : 'Open agenda' }} →</span>
+                <span class="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-800 bg-emerald-50 border border-emerald-200 px-3.5 py-2 rounded-full w-fit">{{ $locale === 'fr' ? 'Voir l’agenda & s’inscrire' : 'Open agenda & RSVP' }} →</span>
             </a>
         </div>
     </section>

@@ -30,20 +30,23 @@ return [
     'meetings_n' => 'événements',
 
     'badge2' => "Réseau panafricain · Afrique de l'Ouest, Maghreb & International",
-    'title_line1' => 'Explorez, fédérez,',
-    'title_accent' => 'rayonnez.',
+    'title_line1' => 'Explorez, suivez,',
+    'title_accent' => 'échangez.',
     'subtitle2' => "Le portail institutionnel officiel du RASED — recherche collaborative, écoles doctorales communes, revue scientifique et coopération académique entre institutions africaines et internationales.",
     'cta_primary' => 'Explorer la Revue & Publications',
-    'cta_secondary' => 'Découvrir la Gouvernance & Membres',
+    'cta_secondary' => 'Soumettre un article',
     'watch_report' => 'Voir le reportage de Nouakchott',
     'official_broadcast' => 'Archive télévisée officielle',
 
-    'stats2' => [
-        ['value' => '03', 'label' => 'Pôles fondateurs', 'sub' => 'Dakar · Rabat · Nouakchott'],
-        ['value' => '06', 'label' => 'Commissions permanentes', 'sub' => 'Règlement intérieur, art. 53-55'],
-        ['value' => '05', 'label' => 'Catégories statutaires', 'sub' => "Ouvert aux institutions & chercheurs"],
-        ['value' => '04', 'label' => 'Organes dirigeants', 'sub' => 'Gouvernance tournante & collégiale'],
-    ],
+    'stat_members_label' => 'Profils & Doyens',
+    'stat_members_sub' => 'Dakar · Rabat · Nouakchott',
+    'stat_commissions_label' => 'Commissions actives',
+    'stat_commissions_sub' => 'Règlement intérieur, art. 53-55',
+    'stat_articles_label' => 'Dossiers & Publications',
+    'stat_articles_sub' => 'Revue RASE & Cahiers',
+    'stat_categories_value' => '05',
+    'stat_categories_label' => 'Catégories statutaires',
+    'stat_categories_sub' => "Ouvert à l'international",
 
     'missions' => [
         ['number' => '01', 'title' => "Renforcer la coopération scientifique entre institutions africaines en sciences de l'éducation", 'detail' => 'Structurer un dialogue permanent entre facultés, écoles normales supérieures et centres de recherche du continent.'],

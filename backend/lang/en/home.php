@@ -31,19 +31,22 @@ return [
 
     'badge2' => 'Pan-African Network · West Africa, Maghreb & International',
     'title_line1' => 'Explore, unite,',
-    'title_accent' => 'advance.',
+    'title_accent' => 'collaborate.',
     'subtitle2' => 'The official institutional portal of RASED — collaborative research, joint doctoral schools, peer-reviewed publishing, and inter-university cooperation across Africa and beyond.',
     'cta_primary' => 'Explore Journal & Publications',
-    'cta_secondary' => 'Discover Governance & Members',
+    'cta_secondary' => 'Submit a paper',
     'watch_report' => 'Watch the Nouakchott Broadcast',
     'official_broadcast' => 'Official TV Broadcast',
 
-    'stats2' => [
-        ['value' => '03', 'label' => 'Founding Hubs', 'sub' => 'Dakar · Rabat · Nouakchott'],
-        ['value' => '06', 'label' => 'Standing Commissions', 'sub' => 'Internal Bylaws, art. 53-55'],
-        ['value' => '05', 'label' => 'Statutory Categories', 'sub' => 'Open to institutions & scholars'],
-        ['value' => '04', 'label' => 'Governing Bodies', 'sub' => 'Collegial rotating governance'],
-    ],
+    'stat_members_label' => 'Scholars & Deans',
+    'stat_members_sub' => 'Dakar · Rabat · Nouakchott',
+    'stat_commissions_label' => 'Active Commissions',
+    'stat_commissions_sub' => 'Internal Bylaws, art. 53-55',
+    'stat_articles_label' => 'Issues & Calls',
+    'stat_articles_sub' => 'RASE Journal & Series',
+    'stat_categories_value' => '05',
+    'stat_categories_label' => 'Statutory Categories',
+    'stat_categories_sub' => 'Open internationally',
 
     'missions' => [
         ['number' => '01', 'title' => 'Strengthen scientific cooperation among African institutions in education sciences', 'detail' => 'Build enduring academic bridges across faculties of education, teacher training colleges, and research centers.'],

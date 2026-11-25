@@ -24,6 +24,8 @@ Route::get('/', function () {
     $stats = [
         'articles' => Article::where('status', 'published')->count(),
         'meetings' => Meeting::count(),
+        'members' => \App\Models\Member::count(),
+        'commissions' => \App\Models\Commission::count(),
     ];
 
     $heroArticle = $articles->first();
