@@ -169,6 +169,45 @@ $dateFmt = fn ($date, $opts = []) => $date->locale($locale)->isoFormat($opts['fo
         </div>
     </section>
 
+    {{-- ANCRAGE CONTINENTAL --}}
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 lg:pb-24">
+        <p class="text-xs font-bold text-rased-600 uppercase tracking-[0.18em] mb-2">{{ $locale === 'fr' ? 'Ancrage continental' : 'Continental Footprint' }}</p>
+        <h2 class="font-display text-3xl sm:text-4xl font-extrabold text-rased-950 leading-tight mb-10 max-w-2xl">{{ $locale === 'fr' ? 'Trois institutions fondatrices, une dynamique panafricaine' : 'Three Founding Institutions, One Pan-African Momentum' }}</h2>
+
+        <div class="grid md:grid-cols-3 gap-5">
+            <div class="bg-white border border-rased-900/10 rounded-2xl p-6">
+                <p class="text-xs font-bold text-gold-700 mb-2">Rabat · MAR</p>
+                <h3 class="font-display font-bold text-rased-950 mb-1">Faculté des Sciences de l’Éducation · Université Mohammed V</h3>
+                <p class="text-sm text-rased-900/65 mb-3">Pr Abdellatif Kidai — {{ $locale === 'fr' ? 'Doyen de la FSE · Président en exercice du RASED' : 'Dean of FSE · Sitting President of RASED' }}</p>
+                <div class="flex flex-wrap gap-1.5">
+                    @foreach (['Politiques éducatives', 'Formation doctorale', 'Innovation pédagogique'] as $tag)
+                        <span class="text-[10px] px-2 py-1 rounded-full bg-rased-50 text-rased-700">{{ $tag }}</span>
+                    @endforeach
+                </div>
+            </div>
+            <div class="bg-white border border-rased-900/10 rounded-2xl p-6">
+                <p class="text-xs font-bold text-gold-700 mb-2">Nouakchott · MRT</p>
+                <h3 class="font-display font-bold text-rased-950 mb-1">École Normale Supérieure de Nouakchott</h3>
+                <p class="text-sm text-rased-900/65 mb-3">Pr Mohamed Aly Louly — {{ $locale === 'fr' ? 'Directeur de l’ENS · Siège de l’acte de signature' : 'Director of ENS · Host of the Founding Signing' }}</p>
+                <div class="flex flex-wrap gap-1.5">
+                    @foreach (['Formation des formateurs', 'Coopération régionale', 'Ingénierie curriculaire'] as $tag)
+                        <span class="text-[10px] px-2 py-1 rounded-full bg-rased-50 text-rased-700">{{ $tag }}</span>
+                    @endforeach
+                </div>
+            </div>
+            <div class="bg-white border border-rased-900/10 rounded-2xl p-6">
+                <p class="text-xs font-bold text-gold-700 mb-2">Dakar · SEN</p>
+                <h3 class="font-display font-bold text-rased-950 mb-1">FASTEF · Université Cheikh Anta Diop</h3>
+                <p class="text-sm text-rased-900/65 mb-3">Pr Moustapha Sokhna — {{ $locale === 'fr' ? 'Doyen de la FASTEF · Université Cheikh Anta Diop' : 'Dean of FASTEF · Cheikh Anta Diop University' }}</p>
+                <div class="flex flex-wrap gap-1.5">
+                    @foreach (['Didactique des disciplines', 'Technologies éducatives', 'Recherche collaborative'] as $tag)
+                        <span class="text-[10px] px-2 py-1 rounded-full bg-rased-50 text-rased-700">{{ $tag }}</span>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </section>
+
     {{-- MISSIONS & CATEGORIES --}}
     <section class="bg-white border-y border-rased-900/10 py-20 lg:py-28">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-12 gap-14 lg:gap-16">
@@ -374,7 +413,10 @@ $dateFmt = fn ($date, $opts = []) => $date->locale($locale)->isoFormat($opts['fo
                     @endforeach
                 </h2>
                 <p class="text-rased-200/80 text-base leading-relaxed mb-8">{{ __('home.cta_sub') }}</p>
-                <a href="{{ route('articles.index') }}" class="inline-block px-8 py-4 bg-gold-500 text-rased-950 rounded-full font-bold text-base hover:bg-gold-400 hover:-translate-y-0.5 transition-all">{{ __('home.cta_primary') }}</a>
+                <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                    <a href="{{ route('register') }}" class="inline-block px-8 py-4 bg-gold-500 text-rased-950 rounded-full font-bold text-base hover:bg-gold-400 hover:-translate-y-0.5 transition-all">{{ $locale === 'fr' ? 'Adhérer au réseau RASED' : 'Join the RASED network' }}</a>
+                    <a href="{{ route('articles.create') }}" class="inline-block px-8 py-4 bg-white/10 border border-white/20 text-white rounded-full font-bold text-base hover:bg-white/15 transition-all">{{ $locale === 'fr' ? 'Soumettre une publication' : 'Submit a publication' }}</a>
+                </div>
             </div>
         </div>
     </section>
