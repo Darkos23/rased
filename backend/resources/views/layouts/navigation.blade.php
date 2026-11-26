@@ -1,103 +1,138 @@
-<nav x-data="{ open: false }" class="bg-ui-panel border-b border-ui-border sticky top-0 z-30">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
-            <div class="flex">
-                <div class="shrink-0 flex items-center gap-2">
-                    <a href="{{ url('/') }}" class="flex items-center gap-2">
-                        <img src="{{ asset('rased-logo.png') }}" alt="RASED" class="h-9 w-auto">
-                        <span class="font-outfit font-extrabold text-ui-text hidden sm:inline">RASED</span>
-                    </a>
-                </div>
+@php
+    $locale = app()->getLocale();
+    $navArticlesCount = \App\Models\Article::where('status', 'published')->count();
+    $navMembersCount = \App\Models\Member::count();
+    $navCommissionsCount = \App\Models\Commission::count();
 
-                <div class="hidden space-x-6 lg:-my-px lg:ms-10 lg:flex items-center">
-                    <x-nav-link :href="url('/')" :active="request()->routeIs('home')">{{ __('nav.home') }}</x-nav-link>
-                    <x-nav-link :href="route('articles.index')" :active="request()->routeIs('articles.*')">{{ __('nav.articles') }}</x-nav-link>
-                    <x-nav-link :href="route('membres')" :active="request()->routeIs('membres')">{{ __('nav.members') }}</x-nav-link>
-                    <x-nav-link :href="route('commissions')" :active="request()->routeIs('commissions')">{{ __('nav.commissions') }}</x-nav-link>
-                </div>
+    $navItems = [
+        ['active' => request()->routeIs('home'), 'href' => url('/'), 'label' => __('nav.home'), 'badge' => null],
+        ['active' => request()->routeIs('articles.*'), 'href' => route('articles.index'), 'label' => $locale === 'fr' ? 'Publications' : 'Publications', 'badge' => $navArticlesCount],
+        ['active' => request()->routeIs('membres'), 'href' => route('membres'), 'label' => __('nav.members'), 'badge' => $navMembersCount],
+        ['active' => request()->routeIs('commissions'), 'href' => route('commissions'), 'label' => __('nav.commissions'), 'badge' => $navCommissionsCount],
+        ['active' => request()->routeIs('meetings.*'), 'href' => route('meetings.index'), 'label' => $locale === 'fr' ? 'Réunions' : 'Meetings', 'badge' => null],
+    ];
+@endphp
+
+<header x-data="{ open: false }" class="sticky top-0 z-40">
+    {{-- Top institutional ribbon --}}
+    <div class="bg-rased-950 text-white/80 border-b border-white/10 text-[11px]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-8 flex items-center justify-between gap-4">
+            <div class="flex items-center gap-2.5 min-w-0">
+                <span class="inline-block w-1.5 h-1.5 rounded-full bg-gold-400 animate-pulse shrink-0"></span>
+                <span class="font-medium tracking-wide text-white/90 truncate">{{ $locale === 'fr' ? 'Réseau Africain des Sciences de l’Éducation' : 'African Network of Education Sciences' }}</span>
+                <span class="hidden md:inline text-white/30">|</span>
+                <span class="hidden md:inline font-serif text-gold-400/95 shrink-0">الشبكة الإفريقية لعلوم التربية</span>
             </div>
-
-            <div class="hidden lg:flex lg:items-center lg:ms-6 gap-3">
-                <!-- Language switcher -->
-                <div class="flex items-center text-xs font-bold text-ui-muted">
-                    <a href="{{ route('lang.switch', 'fr') }}" class="px-2 py-1 rounded {{ app()->getLocale() === 'fr' ? 'bg-brand-50 text-brand-700' : 'hover:text-ui-text' }}">FR</a>
-                    <span class="text-ui-border">/</span>
-                    <a href="{{ route('lang.switch', 'en') }}" class="px-2 py-1 rounded {{ app()->getLocale() === 'en' ? 'bg-brand-50 text-brand-700' : 'hover:text-ui-text' }}">EN</a>
-                </div>
-
-                @auth
-                    <x-dropdown align="right" width="48">
-                        <x-slot name="trigger">
-                            <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-ui-muted bg-white hover:text-ui-text focus:outline-none transition ease-in-out duration-150">
-                                <div>{{ Auth::user()->name }}</div>
-                                <div class="ms-1">
-                                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                    </svg>
-                                </div>
-                            </button>
-                        </x-slot>
-                        <x-slot name="content">
-                            <x-dropdown-link :href="route('dashboard')">{{ __('nav.dashboard') }}</x-dropdown-link>
-                            <x-dropdown-link :href="route('profile.edit')">{{ __('nav.profile') }}</x-dropdown-link>
-                            @if(Auth::user()->isAdmin())
-                                <x-dropdown-link :href="route('admin.users')">{{ __('nav.admin_users') }}</x-dropdown-link>
-                            @endif
-                            <form method="POST" action="{{ route('logout') }}">
-                                @csrf
-                                <x-dropdown-link :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();">
-                                    {{ __('nav.logout') }}
-                                </x-dropdown-link>
-                            </form>
-                        </x-slot>
-                    </x-dropdown>
-                @else
-                    <a href="{{ route('login') }}" class="text-sm font-medium text-ui-muted hover:text-ui-text">{{ __('nav.login') }}</a>
-                    <a href="{{ route('register') }}" class="text-sm font-bold bg-brand-600 text-white px-4 py-2 rounded-full hover:bg-brand-700 transition">{{ __('nav.register') }}</a>
-                @endauth
-            </div>
-
-            <div class="-me-2 flex items-center lg:hidden">
-                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-ui-muted hover:text-ui-text hover:bg-ui-bg focus:outline-none transition duration-150 ease-in-out">
-                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                        <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
+            <div class="hidden sm:flex items-center gap-3 text-white/65 shrink-0 whitespace-nowrap">
+                <span>FASTEF · UCAD</span>
+                <span class="text-white/25">•</span>
+                <span>FSE · Rabat</span>
+                <span class="text-white/25">•</span>
+                <span>ENS · Nouakchott</span>
             </div>
         </div>
     </div>
 
-    <div :class="{'block': open, 'hidden': ! open}" class="hidden lg:hidden">
-        <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="url('/')">{{ __('nav.home') }}</x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('articles.index')">{{ __('nav.articles') }}</x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('membres')">{{ __('nav.members') }}</x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('commissions')">{{ __('nav.commissions') }}</x-responsive-nav-link>
+    {{-- Main glassmorphic navigation bar --}}
+    <nav class="relative backdrop-blur-xl border-b bg-ivory-50/90 border-rased-900/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-[68px] gap-3">
+                {{-- Brand identity --}}
+                <a href="{{ url('/') }}" class="flex items-center gap-2.5 text-left group shrink-0">
+                    <img src="{{ asset('rased-logo.png') }}" alt="RASED" class="h-9 w-9 rounded-full object-cover ring-2 ring-transparent group-hover:ring-gold-500 transition-all duration-300">
+                    <div class="leading-tight">
+                        <div class="flex items-center gap-1.5">
+                            <span class="font-display font-extrabold text-lg sm:text-xl tracking-tight text-rased-950 whitespace-nowrap">RASED</span>
+                            <span class="hidden 2xl:inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-rased-50 text-rased-700 border border-rased-200 whitespace-nowrap">{{ $locale === 'fr' ? 'Officiel' : 'Official' }}</span>
+                        </div>
+                        <p class="text-[10px] text-rased-900/55 hidden xl:block whitespace-nowrap">{{ $locale === 'fr' ? 'Sciences de l’Éducation' : 'Education Sciences' }}</p>
+                    </div>
+                </a>
+
+                {{-- Desktop pill navigation --}}
+                <div class="hidden lg:flex items-center gap-0.5 bg-white/90 border border-rased-900/10 rounded-full p-1 shadow-xs shrink-0">
+                    @foreach ($navItems as $item)
+                        <a href="{{ $item['href'] }}" class="px-3 xl:px-3.5 py-1.5 rounded-full text-xs xl:text-[13px] font-semibold transition-all inline-flex items-center gap-1.5 whitespace-nowrap shrink-0 {{ $item['active'] ? 'bg-rased-900 text-white shadow-xs' : 'text-rased-900/70 hover:text-rased-950 hover:bg-rased-50/80' }}">
+                            <span>{{ $item['label'] }}</span>
+                            @if (!is_null($item['badge']))
+                                <span class="text-[10px] leading-none px-1.5 py-0.5 rounded-full font-bold {{ $item['active'] ? 'bg-gold-500 text-rased-950' : 'bg-rased-100 text-rased-700' }}">{{ $item['badge'] }}</span>
+                            @endif
+                        </a>
+                    @endforeach
+                </div>
+
+                {{-- Right actions (lg+) --}}
+                <div class="hidden lg:flex items-center gap-2 shrink-0">
+                    <div role="group" aria-label="Language switcher" class="h-9 inline-flex items-center bg-white border border-rased-900/12 rounded-full p-0.5 text-xs font-bold shrink-0">
+                        <a href="{{ route('lang.switch', 'fr') }}" class="px-2.5 h-full rounded-full inline-flex items-center transition-colors {{ $locale === 'fr' ? 'bg-rased-100 text-rased-900' : 'text-rased-900/50 hover:text-rased-900' }}">FR</a>
+                        <a href="{{ route('lang.switch', 'en') }}" class="px-2.5 h-full rounded-full inline-flex items-center transition-colors {{ $locale === 'en' ? 'bg-rased-100 text-rased-900' : 'text-rased-900/50 hover:text-rased-900' }}">EN</a>
+                    </div>
+
+                    @auth
+                        <div class="relative" x-data="{ menu: false }" @click.outside="menu = false">
+                            <button type="button" @click="menu = !menu" class="inline-flex items-center gap-1.5 pl-1 pr-2.5 py-1 rounded-full bg-rased-50 border border-rased-200 shrink-0">
+                                <span class="w-7 h-7 rounded-full bg-rased-900 text-gold-400 text-[11px] font-bold flex items-center justify-center">{{ Str::upper(Str::substr(auth()->user()->name, 0, 2)) }}</span>
+                                <span class="text-xs font-bold text-rased-950 max-w-[96px] truncate">{{ auth()->user()->name }}</span>
+                            </button>
+                            <div x-show="menu" x-cloak x-transition class="absolute right-0 mt-2 w-48 rounded-xl bg-white border border-rased-900/10 shadow-lg py-1.5 z-50">
+                                <a href="{{ route('dashboard') }}" class="block px-4 py-2 text-sm text-rased-900/80 hover:bg-ivory-50">{{ __('nav.dashboard') }}</a>
+                                <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-sm text-rased-900/80 hover:bg-ivory-50">{{ __('nav.profile') }}</a>
+                                @if (auth()->user()->isAdmin())
+                                    <a href="{{ route('admin.users') }}" class="block px-4 py-2 text-sm text-rased-900/80 hover:bg-ivory-50">{{ __('nav.admin_users') }}</a>
+                                @endif
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button type="submit" class="w-full text-left px-4 py-2 text-sm text-rased-900/80 hover:bg-ivory-50">{{ __('nav.logout') }}</button>
+                                </form>
+                            </div>
+                        </div>
+                    @else
+                        <a href="{{ route('login') }}" class="h-9 px-3 rounded-full text-xs font-semibold text-rased-900/80 hover:text-rased-950 hover:bg-white inline-flex items-center gap-1.5 transition-colors whitespace-nowrap shrink-0">
+                            <span>{{ __('nav.login') }}</span>
+                        </a>
+                        <a href="{{ route('register') }}" class="h-9 px-4 rounded-full bg-rased-900 text-white text-xs font-bold hover:bg-rased-800 shadow-sm hover:shadow inline-flex items-center gap-1.5 transition-all whitespace-nowrap shrink-0">
+                            <span>{{ $locale === 'fr' ? 'Adhérer' : 'Join' }}</span>
+                            <span class="text-gold-400" aria-hidden="true">↗</span>
+                        </a>
+                    @endauth
+                </div>
+
+                {{-- Mobile controls --}}
+                <div class="flex lg:hidden items-center gap-2 shrink-0">
+                    <a href="{{ route('lang.switch', $locale === 'fr' ? 'en' : 'fr') }}" class="h-9 px-2.5 inline-flex items-center gap-1 rounded-full bg-white border border-rased-900/12 text-xs font-bold text-rased-900 whitespace-nowrap">
+                        {{ strtoupper($locale === 'fr' ? 'en' : 'fr') }}
+                    </a>
+                    <button type="button" @click="open = !open" class="h-9 w-9 inline-flex items-center justify-center rounded-xl bg-rased-900 text-white">
+                        <svg x-show="!open" class="h-5 w-5" stroke="currentColor" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+                        <svg x-show="open" x-cloak class="h-5 w-5" stroke="currentColor" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                    </button>
+                </div>
+            </div>
         </div>
 
-        <div class="pt-4 pb-1 border-t border-ui-border">
-            @auth
-                <div class="px-4">
-                    <div class="font-medium text-base text-ui-text">{{ Auth::user()->name }}</div>
-                    <div class="font-medium text-sm text-ui-muted">{{ Auth::user()->email }}</div>
-                </div>
-                <div class="mt-3 space-y-1">
-                    <x-responsive-nav-link :href="route('dashboard')">{{ __('nav.dashboard') }}</x-responsive-nav-link>
-                    <x-responsive-nav-link :href="route('profile.edit')">{{ __('nav.profile') }}</x-responsive-nav-link>
+        {{-- Mobile drawer --}}
+        <div x-show="open" x-cloak class="lg:hidden border-t border-rased-900/10 bg-ivory-50 px-4 pt-3 pb-6 space-y-1.5 shadow-xl">
+            @foreach ($navItems as $item)
+                <a href="{{ $item['href'] }}" class="w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold {{ $item['active'] ? 'bg-rased-900 text-white' : 'text-rased-900/80 hover:bg-white' }}">
+                    <span>{{ $item['label'] }}</span>
+                    @if (!is_null($item['badge']))
+                        <span class="px-2 py-0.5 rounded-full text-xs bg-gold-500 text-rased-950 font-bold">{{ $item['badge'] }}</span>
+                    @endif
+                </a>
+            @endforeach
+
+            <div class="pt-3 mt-3 border-t border-rased-900/10 grid grid-cols-2 gap-2.5">
+                @auth
+                    <a href="{{ route('dashboard') }}" class="h-10 px-4 rounded-xl border border-rased-900/15 bg-white text-xs font-bold text-rased-900 whitespace-nowrap inline-flex items-center justify-center">{{ __('nav.dashboard') }}</a>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
-                        <x-responsive-nav-link :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();">
-                            {{ __('nav.logout') }}
-                        </x-responsive-nav-link>
+                        <button type="submit" class="w-full h-10 px-4 rounded-xl bg-rased-900 text-white text-xs font-bold whitespace-nowrap">{{ __('nav.logout') }}</button>
                     </form>
-                </div>
-            @else
-                <div class="mt-3 space-y-1">
-                    <x-responsive-nav-link :href="route('login')">{{ __('nav.login') }}</x-responsive-nav-link>
-                    <x-responsive-nav-link :href="route('register')">{{ __('nav.register') }}</x-responsive-nav-link>
-                </div>
-            @endauth
+                @else
+                    <a href="{{ route('login') }}" class="h-10 px-4 rounded-xl border border-rased-900/15 bg-white text-xs font-bold text-rased-900 whitespace-nowrap inline-flex items-center justify-center">{{ __('nav.login') }}</a>
+                    <a href="{{ route('register') }}" class="h-10 px-4 rounded-xl bg-rased-900 text-white text-xs font-bold whitespace-nowrap inline-flex items-center justify-center">{{ $locale === 'fr' ? 'Adhérer' : 'Join' }}</a>
+                @endauth
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
+</header>
