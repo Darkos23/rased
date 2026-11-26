@@ -10,5 +10,6 @@ class Member extends Model
 
     protected $casts = [
         'highlights' => 'array',
+        'tags' => 'array',
     ];
 }

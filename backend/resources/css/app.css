@@ -29,3 +29,9 @@
     background-image: radial-gradient(circle at 1px 1px, rgba(13, 38, 33, 0.07) 1px, transparent 0);
     background-size: 24px 24px;
 }
+
+.passport-scene { perspective: 1300px; }
+.passport-flipper { transform-style: preserve-3d; transition: transform 0.72s cubic-bezier(0.22, 1, 0.36, 1); }
+.passport-flipper.is-flipped { transform: rotateY(180deg); }
+.passport-face { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.passport-face-back { transform: rotateY(180deg); }

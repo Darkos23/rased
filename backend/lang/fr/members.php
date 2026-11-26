@@ -13,4 +13,15 @@ return [
     'category_founder' => 'Membre fondateur',
     'role_dean_fastef' => 'Doyen de la FASTEF · UCAD',
     'role_director_ens' => 'Directeur de l\'ENS de Nouakchott',
+
+    'badge2' => 'Passeports Académiques & Diplomatiques',
+    'title2' => 'Membres & Signataires',
+    'subtitle2' => 'Survolez chaque passeport pour le détail, retournez-le pour consulter les responsabilités clés.',
+    'filter_all' => 'Tous',
+    'filter_governance' => 'Gouvernance & Membres',
+    'filter_founders' => 'Doyens Fondateurs',
+    'titles_responsibilities' => 'Titres & responsabilités clés',
+    'flip_3d' => 'Voir le détail',
+    'full_profile' => 'Fiche complète',
+    'founding_institutions_title' => 'Les 3 institutions membres fondatrices',
 ];
