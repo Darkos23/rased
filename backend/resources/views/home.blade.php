@@ -489,54 +489,61 @@ $dateFmt = fn ($date, $opts = []) => $date->locale($locale)->isoFormat($opts['fo
         </div>
     </section>
 
-    {{-- RÉUNIONS --}}
-    <section id="reportage-nouakchott" class="bg-ivory-50 border-t border-rased-900/10 py-24">
-        <div class="max-w-7xl mx-auto px-4 md:px-8">
-            <div class="flex items-end justify-between mb-12">
+    {{-- AGENDA INTERNATIONAL --}}
+    <section id="reportage-nouakchott" class="py-20 lg:py-28 bg-white border-t border-rased-900/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
                 <div>
-                    <p class="text-xs font-bold text-emerald-600 uppercase tracking-widest mb-2">{{ __('home.meetings_label') }}</p>
-                    <h2 class="font-display text-4xl font-extrabold text-rased-950">{{ __('home.agenda') }}</h2>
+                    <p class="text-xs font-bold text-emerald-700 uppercase tracking-[0.18em] mb-2">{{ $locale === 'fr' ? 'Agenda international & Archives audiovisuelles' : 'International Agenda & Broadcast Archive' }}</p>
+                    <h2 class="font-display text-3xl sm:text-4xl font-extrabold text-rased-950">{{ $locale === 'fr' ? 'Activités & lancement officiel' : 'Activities & Official Launch' }}</h2>
                 </div>
-                <a href="{{ route('meetings.index') }}" class="hidden md:inline-flex items-center gap-1.5 text-sm font-bold text-emerald-600 border border-emerald-200 px-4 py-2 rounded-full hover:bg-emerald-50 transition-all">{{ __('home.see_all') }} →</a>
+                <a href="{{ route('meetings.index') }}" class="w-fit inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-emerald-200 bg-emerald-50/70 text-xs font-bold text-emerald-800 hover:bg-emerald-100 transition-colors whitespace-nowrap">
+                    <span>{{ $locale === 'fr' ? 'Tout l’agenda & séminaires' : 'All seminars & schedule' }}</span>
+                    <span aria-hidden="true">→</span>
+                </a>
             </div>
 
-            <div class="mb-10 bg-white border border-rased-900/10 rounded-2xl shadow-sm overflow-hidden">
-                <video controls preload="metadata" class="w-full aspect-video bg-black" poster="{{ asset('rased-doyen-nkc.jpeg') }}">
-                    <source src="{{ asset('rased-lancement-nkc.mp4') }}" type="video/mp4">
-                </video>
-                <div class="px-6 py-4">
-                    <p class="text-xs font-bold text-emerald-600 uppercase tracking-wide mb-1">{{ __('home.official_broadcast') }}</p>
-                    <p class="text-sm text-rased-900/65">{{ $locale === 'fr' ? 'Extrait de la couverture télévisée de la signature du RASED à Nouakchott, en Mauritanie.' : 'Excerpt from the TV coverage of the RASED signing ceremony in Nouakchott, Mauritania.' }}</p>
+            <div class="grid lg:grid-cols-12 gap-8 items-start">
+                {{-- Reportage TV officiel --}}
+                <div class="lg:col-span-7 rounded-3xl overflow-hidden bg-rased-950 border border-rased-900 shadow-xl">
+                    <video controls preload="metadata" class="w-full aspect-video bg-black object-cover" poster="{{ asset('rased-doyen-nkc.jpeg') }}">
+                        <source src="{{ asset('rased-lancement-nkc.mp4') }}" type="video/mp4">
+                    </video>
+                    <div class="p-6 sm:p-7 text-white">
+                        <div class="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-gold-400 mb-1.5">
+                            <span>{{ $locale === 'fr' ? 'Reportage télévisé · Nouakchott, Mauritanie' : 'Television Report · Nouakchott, Mauritania' }}</span>
+                        </div>
+                        <h3 class="font-display text-lg font-bold text-white">{{ $locale === 'fr' ? 'Couverture télévisée officielle de la signature du RASED' : 'Official TV Coverage of the RASED Signing Ceremony' }}</h3>
+                        <p class="text-xs sm:text-sm text-white/70 mt-1">{{ $locale === 'fr' ? 'Cérémonie de lancement réunissant l’ENS de Nouakchott, la FASTEF-UCAD de Dakar et la FSE de l’Université Mohammed V de Rabat.' : 'Founding ceremony uniting ENS Nouakchott, FASTEF-UCAD Dakar, and FSE Mohammed V University of Rabat.' }}</p>
+                    </div>
                 </div>
-            </div>
 
-            @if ($listMeetings->isEmpty())
-                <div class="text-center py-16 text-rased-900/55">
-                    <p class="font-display text-xl font-bold mb-2">{{ __('home.no_meetings') }}</p>
-                </div>
-            @else
-                <div class="flex flex-col gap-4">
-                    @foreach ($listMeetings as $m)
-                        <div class="group flex items-center gap-5 bg-white border border-rased-900/10 rounded-2xl px-6 py-5 shadow-sm hover:shadow-lg transition-all">
-                            <div class="shrink-0 w-14 h-14 rounded-xl bg-ivory-100 border border-rased-900/10 flex flex-col items-center justify-center">
-                                <span class="font-display text-xl font-extrabold text-rased-950 leading-none">{{ $m->scheduled_at->format('d') }}</span>
-                                <span class="text-[10px] font-bold text-rased-900/55 uppercase">{{ $m->scheduled_at->locale($locale)->isoFormat('MMM') }}</span>
+                {{-- Réunions à venir (dynamique) --}}
+                <div class="lg:col-span-5 space-y-4">
+                    @forelse ($listMeetings as $m)
+                        <div class="rounded-2xl bg-ivory-50 border border-rased-900/10 p-5 sm:p-6 hover:bg-white hover:shadow-sm transition-all">
+                            <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                                <span class="text-[11px] font-bold uppercase tracking-wider text-rased-700">{{ $locale === 'fr' ? ($m->status === 'live' ? 'En direct' : ($m->status === 'ended' ? 'Archivé' : 'Réunion planifiée')) : ($m->status === 'live' ? 'Live now' : ($m->status === 'ended' ? 'Archived' : 'Scheduled meeting')) }}</span>
+                                <span class="text-[11px] font-mono px-2.5 py-0.5 rounded-full bg-white border border-rased-900/10 text-rased-800">{{ $m->scheduled_at->locale($locale)->isoFormat('D MMM YYYY · HH:mm') }}</span>
                             </div>
-                            <div class="flex-1 min-w-0">
-                                <h4 class="font-display font-bold text-rased-950 text-base truncate">{{ $m->title }}</h4>
-                                <p class="text-sm text-rased-900/65 mt-0.5">{{ $m->host->name }} · {{ $m->scheduled_at->format('H:i') }} GMT</p>
-                            </div>
-                            <div class="shrink-0 flex items-center gap-3">
+                            <h3 class="font-display font-bold text-base text-rased-950 mb-1.5">{{ $m->title }}</h3>
+                            @if ($m->description)
+                                <p class="text-xs text-rased-900/65 leading-relaxed mb-4">{{ \Illuminate\Support\Str::limit($m->description, 140) }}</p>
+                            @endif
+                            <div class="flex flex-wrap items-center justify-between gap-2 pt-3 border-t border-rased-900/8">
+                                <span class="text-[11px] text-rased-900/55">{{ $m->host->name }}</span>
                                 @if ($m->status !== 'ended' && $m->google_meet_url)
-                                    <a href="{{ $m->google_meet_url }}" target="_blank" rel="noopener" class="text-sm font-bold px-5 py-2.5 rounded-full bg-rased-900 text-white hover:bg-rased-800 transition-all">{{ __('home.join') }}</a>
+                                    <a href="{{ $m->google_meet_url }}" target="_blank" rel="noopener" class="px-3 py-1 rounded-full text-[11px] font-bold bg-rased-900 text-white hover:bg-rased-800 transition-colors whitespace-nowrap">{{ $locale === 'fr' ? 'Rejoindre' : 'Join' }}</a>
                                 @elseif ($m->recording_url)
-                                    <a href="{{ $m->recording_url }}" target="_blank" rel="noopener" class="text-sm font-bold px-5 py-2.5 rounded-full border border-rased-900/15 text-rased-950 hover:border-gold-500 transition-all">{{ __('home.see_replay') }}</a>
+                                    <a href="{{ $m->recording_url }}" target="_blank" rel="noopener" class="px-3 py-1 rounded-full text-[11px] font-bold bg-white border border-rased-900/15 text-rased-900 hover:bg-rased-900 hover:text-white transition-colors whitespace-nowrap">{{ $locale === 'fr' ? 'Revoir' : 'Replay' }}</a>
                                 @endif
                             </div>
                         </div>
-                    @endforeach
+                    @empty
+                        <div class="rounded-2xl bg-ivory-50 border border-rased-900/10 p-6 text-sm text-rased-900/55">{{ __('home.no_meetings') }}</div>
+                    @endforelse
                 </div>
-            @endif
+            </div>
         </div>
     </section>
 
