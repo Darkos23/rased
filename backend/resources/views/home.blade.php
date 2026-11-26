@@ -231,35 +231,47 @@ $dateFmt = fn ($date, $opts = []) => $date->locale($locale)->isoFormat($opts['fo
 
                 <div class="flex flex-wrap gap-2 pt-2">
                     @foreach ($hubs as $h)
-                        <button type="button" @click="active = '{{ $h->country_code }}'" :class="active === '{{ $h->country_code }}' ? 'bg-gold-500 text-rased-950' : 'bg-white/10 text-white/75 border border-white/10'" class="px-3.5 py-2 rounded-xl text-xs font-semibold transition-all">
+                        <button type="button" @click="active = '{{ $h->country_code }}'" :class="active === '{{ $h->country_code }}' ? 'bg-gold-500 text-rased-950 shadow-md' : 'bg-white/6 text-white/75 border border-white/10 hover:bg-white/12'" class="px-3.5 py-2 rounded-xl text-xs font-semibold transition-all inline-flex items-center gap-2 whitespace-nowrap">
                             <span class="font-mono text-[10px] opacity-80">{{ $h->country_code }}</span>
-                            {{ $locale === 'fr' ? $h->institution_fr : $h->institution_en }}
+                            <span>{{ Str::before($h->place, ',') }}</span>
                         </button>
                     @endforeach
                 </div>
             </div>
 
             {{-- INFO PANEL (dynamique) --}}
-            <div class="lg:col-span-5 p-7 sm:p-9 bg-rased-900/90 text-white flex flex-col justify-center">
+            <div class="lg:col-span-5 p-7 sm:p-9 bg-rased-900/90 text-white flex flex-col justify-between">
                 @foreach ($hubs as $h)
-                    <div x-show="active === '{{ $h->country_code }}'" x-cloak>
-                        <span class="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-gold-400 mb-4">📍 {{ $h->place }}</span>
-                        <h3 class="font-display text-2xl font-bold text-white leading-snug mb-3">{{ $locale === 'fr' ? $h->institution_fr : $h->institution_en }}</h3>
-                        <div class="p-4 rounded-2xl bg-white/5 border border-white/10 mb-5">
-                            <p class="text-[11px] uppercase tracking-[0.14em] text-white/50 mb-1">{{ $locale === 'fr' ? 'Autorité académique signataire' : 'Signatory Academic Authority' }}</p>
-                            <p class="font-display text-lg font-bold text-gold-400">{{ $h->name }}</p>
-                            <p class="text-xs text-white/75 mt-0.5">{{ $locale === 'fr' ? $h->role_fr : $h->role_en }}</p>
-                        </div>
-                        @if ($h->tags)
-                            <div>
-                                <p class="text-[11px] uppercase tracking-[0.14em] text-white/50 mb-2.5">{{ $locale === 'fr' ? 'Axes d’excellence & coopération' : 'Core Research & Training Pillars' }}</p>
-                                <div class="flex flex-wrap gap-2">
-                                    @foreach ($h->tags as $tag)
-                                        <span class="px-3 py-1 rounded-full bg-rased-800/90 border border-rased-600/50 text-xs text-rased-100">{{ $tag }}</span>
-                                    @endforeach
-                                </div>
+                    <div x-show="active === '{{ $h->country_code }}'" x-cloak class="flex flex-col h-full justify-between">
+                        <div>
+                            <span class="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-gold-400 mb-4">📍 {{ $h->place }}</span>
+                            <h3 class="font-display text-2xl font-bold text-white leading-snug mb-3">{{ $locale === 'fr' ? $h->institution_fr : $h->institution_en }}</h3>
+                            <div class="p-4 rounded-2xl bg-white/5 border border-white/10 mb-5">
+                                <p class="text-[11px] uppercase tracking-[0.14em] text-white/50 mb-1">{{ $locale === 'fr' ? 'Autorité académique signataire' : 'Signatory Academic Authority' }}</p>
+                                <p class="font-display text-lg font-bold text-gold-400">{{ $h->name }}</p>
+                                <p class="text-xs text-white/75 mt-0.5">{{ $locale === 'fr' ? $h->role_fr : $h->role_en }}</p>
                             </div>
-                        @endif
+                            @if ($h->tags)
+                                <div>
+                                    <p class="text-[11px] uppercase tracking-[0.14em] text-white/50 mb-2.5">{{ $locale === 'fr' ? 'Axes d’excellence & coopération' : 'Core Research & Training Pillars' }}</p>
+                                    <div class="flex flex-wrap gap-2">
+                                        @foreach ($h->tags as $tag)
+                                            <span class="px-3 py-1 rounded-full bg-rased-800/90 border border-rased-600/50 text-xs text-rased-100">{{ $tag }}</span>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
+
+                        <div class="pt-6 mt-6 border-t border-white/10 flex flex-wrap items-center justify-between gap-3">
+                            <a href="{{ route('register') }}" class="text-xs font-bold text-gold-400 hover:text-gold-100 transition-colors">
+                                {{ $locale === 'fr' ? '+ Affilier mon institution' : '+ Affiliate my university' }}
+                            </a>
+                            <a href="{{ route('membres') }}" class="shrink-0 inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white text-rased-950 text-xs font-bold hover:bg-gold-100 transition-colors whitespace-nowrap">
+                                <span>{{ $locale === 'fr' ? 'Tous les membres' : 'All members' }}</span>
+                                <span aria-hidden="true">&#8599;</span>
+                            </a>
+                        </div>
                     </div>
                 @endforeach
             </div>
