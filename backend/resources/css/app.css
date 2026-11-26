@@ -25,6 +25,11 @@
 .animate-fade-up { animation: fade-up 0.4s cubic-bezier(0.22, 1, 0.36, 1) both; }
 .animate-slide-progress { animation: slide-progress 6.5s linear forwards; }
 
+@keyframes dash-flow {
+    to { stroke-dashoffset: -36; }
+}
+.animate-dash-flow { animation: dash-flow 2.8s linear infinite; }
+
 .rased-guilloche {
     background-image: radial-gradient(circle at 1px 1px, rgba(13, 38, 33, 0.07) 1px, transparent 0);
     background-size: 24px 24px;

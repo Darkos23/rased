@@ -181,7 +181,39 @@ $dateFmt = fn ($date, $opts = []) => $date->locale($locale)->isoFormat($opts['fo
             {{-- MAP --}}
             <div class="lg:col-span-7 relative p-6 sm:p-9 bg-gradient-to-br from-rased-900 via-rased-950 to-rased-950">
                 <svg viewBox="0 0 540 360" class="w-full h-auto max-h-[345px] select-none">
+                    <defs>
+                        <radialGradient id="hubGlow" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stop-color="#cfa952" stop-opacity="0.48" />
+                            <stop offset="100%" stop-color="#cfa952" stop-opacity="0" />
+                        </radialGradient>
+                        <linearGradient id="corridorLine" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#cfa952" />
+                            <stop offset="50%" stop-color="#5cc9ad" />
+                            <stop offset="100%" stop-color="#cfa952" />
+                        </linearGradient>
+                    </defs>
+
+                    {{-- grille lat/long --}}
+                    @foreach ([60, 120, 180, 240, 300] as $gy)
+                        <line x1="20" y1="{{ $gy }}" x2="520" y2="{{ $gy }}" stroke="rgba(255,255,255,0.06)" stroke-dasharray="3 5" />
+                    @endforeach
+                    @foreach ([90, 180, 270, 360, 450] as $gx)
+                        <line x1="{{ $gx }}" y1="20" x2="{{ $gx }}" y2="340" stroke="rgba(255,255,255,0.06)" stroke-dasharray="3 5" />
+                    @endforeach
+
+                    {{-- silhouette --}}
                     <path d="M212,48 L268,42 L322,56 L368,62 L404,82 L426,122 L456,158 L442,202 L408,246 L388,308 L350,342 L316,334 L298,288 L280,248 L244,244 L204,258 L162,256 L128,248 L122,222 L138,186 L154,146 L182,102 L202,68 Z" fill="rgba(44,106,91,0.25)" stroke="rgba(188,224,214,0.3)" stroke-width="1.4" />
+
+                    {{-- arcs d'expansion panafricaine (décoratif) --}}
+                    @foreach ([['x' => 195, 'y' => 252, 'label' => 'Abidjan'], ['x' => 185, 'y' => 215, 'label' => 'Bamako'], ['x' => 298, 'y' => 58, 'label' => 'Tunis'], ['x' => 290, 'y' => 258, 'label' => 'Yaoundé'], ['x' => 382, 'y' => 194, 'label' => 'Addis-Abeba']] as $node)
+                        <path d="M 145 198 Q {{ (145 + $node['x']) / 2 + 15 }} {{ (198 + $node['y']) / 2 - 18 }} {{ $node['x'] }} {{ $node['y'] }}" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="1.2" stroke-dasharray="4 5" class="animate-dash-flow" />
+                        <circle cx="{{ $node['x'] }}" cy="{{ $node['y'] }}" r="3.2" fill="rgba(188,224,214,0.65)" />
+                        <text x="{{ $node['x'] + 7 }}" y="{{ $node['y'] + 3 }}" fill="rgba(255,255,255,0.52)" font-size="9.5" font-family="Plus Jakarta Sans, sans-serif">{{ $node['label'] }}</text>
+                    @endforeach
+
+                    {{-- corridor fondateur animé --}}
+                    <path d="M 222 88 Q 168 136 145 198 Q 130 225 128 248" fill="none" stroke="url(#corridorLine)" stroke-width="2.5" stroke-opacity="0.45" />
+                    <path d="M 222 88 Q 168 136 145 198 Q 130 225 128 248" fill="none" stroke="#cfa952" stroke-width="2.6" stroke-dasharray="6 6" class="animate-dash-flow" />
 
                     @foreach ($hubs as $h)
                         @php [$x, $y] = $hubCoords[$h->country_code] ?? [0, 0]; @endphp
@@ -189,16 +221,12 @@ $dateFmt = fn ($date, $opts = []) => $date->locale($locale)->isoFormat($opts['fo
                             <circle cx="{{ $x }}" cy="{{ $y }}" r="30" fill="url(#hubGlow)" x-show="active === '{{ $h->country_code }}'"></circle>
                             <circle cx="{{ $x }}" cy="{{ $y }}" r="8" :fill="active === '{{ $h->country_code }}' ? '#cfa952' : '#0d2621'" stroke="#cfa952" stroke-width="2"></circle>
                             <circle cx="{{ $x }}" cy="{{ $y }}" r="2.8" :fill="active === '{{ $h->country_code }}' ? '#0d2621' : '#ffffff'"></circle>
-                            <text x="{{ $x + 12 }}" y="{{ $y + 4 }}" fill="#ffffff" font-size="10.5" font-weight="700" font-family="Outfit, sans-serif">{{ $h->place }}</text>
+                            <g transform="translate({{ $x + 14 }}, {{ $y - 12 }})">
+                                <rect x="0" y="0" width="100" height="24" rx="7" :fill="active === '{{ $h->country_code }}' ? 'rgba(207,169,82,0.96)' : 'rgba(13,38,33,0.9)'" :stroke="active === '{{ $h->country_code }}' ? '#f6eedb' : 'rgba(255,255,255,0.22)'" stroke-width="1"></rect>
+                                <text x="50" y="15.5" text-anchor="middle" :fill="active === '{{ $h->country_code }}' ? '#071915' : '#ffffff'" font-size="10.5" font-weight="700" font-family="Outfit, sans-serif">{{ $h->place }}</text>
+                            </g>
                         </g>
                     @endforeach
-
-                    <defs>
-                        <radialGradient id="hubGlow" cx="50%" cy="50%" r="50%">
-                            <stop offset="0%" stop-color="#cfa952" stop-opacity="0.48" />
-                            <stop offset="100%" stop-color="#cfa952" stop-opacity="0" />
-                        </radialGradient>
-                    </defs>
                 </svg>
 
                 <div class="flex flex-wrap gap-2 pt-2">
