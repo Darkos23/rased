@@ -126,8 +126,17 @@ class CommissionSeeder extends Seeder
             ],
         ];
 
+        $codes = [
+            ['code' => 'COM-01', 'tag_fr' => 'Politique scientifique & Projets', 'tag_en' => 'Scientific Policy & Projects'],
+            ['code' => 'COM-02', 'tag_fr' => 'Écoles doctorales & Curricula', 'tag_en' => 'Doctoral Schools & Curricula'],
+            ['code' => 'COM-03', 'tag_fr' => 'Conventions & Rayonnement', 'tag_en' => 'Agreements & Outreach'],
+            ['code' => 'COM-04', 'tag_fr' => 'Revue africaine & Plateformes', 'tag_en' => 'African Journal & Platforms'],
+            ['code' => 'COM-05', 'tag_fr' => 'Intégrité scientifique & Statuts', 'tag_en' => 'Scientific Integrity & Bylaws'],
+            ['code' => 'COM-06', 'tag_fr' => 'Pérennité & Partenaires financiers', 'tag_en' => 'Sustainability & Financial Partners'],
+        ];
+
         foreach ($data as $i => $c) {
-            Commission::create([...$c, 'order' => $i]);
+            Commission::create([...$c, ...$codes[$i], 'order' => $i]);
         }
     }
 }
