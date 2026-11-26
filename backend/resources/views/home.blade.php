@@ -326,47 +326,117 @@ $dateFmt = fn ($date, $opts = []) => $date->locale($locale)->isoFormat($opts['fo
         </div>
     </section>
 
-    {{-- GOUVERNANCE --}}
-    <section class="border-y border-rased-900/10 bg-ivory-50 py-24">
-        <div class="max-w-7xl mx-auto px-4 md:px-8">
-            <div class="max-w-2xl mb-12">
-                <p class="text-xs font-bold text-rased-600 uppercase tracking-widest mb-2">{{ $locale === 'fr' ? 'Organisation' : 'Organisation' }}</p>
-                <h2 class="font-display text-3xl md:text-4xl font-extrabold text-rased-950 mb-4">{{ $locale === 'fr' ? 'Gouvernance' : 'Governance' }}</h2>
-                <p class="text-rased-900/65 text-sm leading-relaxed">{{ $locale === 'fr' ? 'La gouvernance du RASED s’articule autour de quatre organes statutaires (Règlement intérieur, art. 15-35).' : 'RASED’s governance is structured around four statutory bodies (Internal Regulations, art. 15-35).' }}</p>
+    {{-- GOUVERNANCE STATUTAIRE --}}
+    <section class="border-y border-rased-900/10 bg-ivory-50 py-20 lg:py-28">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+                <div class="max-w-2xl">
+                    <p class="text-xs font-bold text-rased-600 uppercase tracking-[0.18em] mb-2">{{ $locale === 'fr' ? 'Organisation · Règlement intérieur, art. 15-35' : 'Organization · Internal Bylaws, art. 15-35' }}</p>
+                    <h2 class="font-display text-3xl sm:text-4xl font-extrabold text-rased-950 mb-3">{{ $locale === 'fr' ? 'Gouvernance statutaire' : 'Statutory Governance' }}</h2>
+                    <p class="text-sm text-rased-900/70 leading-relaxed">{{ $locale === 'fr' ? 'Quatre organes complémentaires assurent l’équilibre régional, la continuité administrative et le pilotage scientifique du RASED.' : 'Four complementary bodies ensure regional balance, administrative continuity, and academic stewardship.' }}</p>
+                </div>
+
+                <a href="{{ route('membres') }}" class="w-fit inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white border border-rased-900/12 text-xs font-bold text-rased-950 hover:border-rased-700 transition-colors whitespace-nowrap">
+                    <span>{{ $locale === 'fr' ? 'Explorer tous les membres' : 'Explore all members' }}</span>
+                    <span aria-hidden="true">→</span>
+                </a>
             </div>
 
-            <div class="grid md:grid-cols-2 gap-5">
-                <div class="bg-white border border-rased-900/10 rounded-2xl shadow-sm p-7">
-                    <p class="text-xs font-bold text-gold-700 uppercase tracking-wide mb-1">{{ $locale === 'fr' ? 'Présidence' : 'Presidency' }}</p>
-                    <p class="font-display font-bold text-rased-950 text-lg mb-1">Pr Abdellatif Kidai</p>
-                    <p class="text-sm text-rased-900/65 mb-3">{{ $locale === 'fr' ? 'Doyen de la Faculté des Sciences de l’Éducation, Université Mohammed V, Rabat' : 'Dean of the Faculty of Education Sciences, Mohammed V University, Rabat' }}</p>
-                    <p class="text-xs text-rased-900/55 border-t border-rased-900/10 pt-3">{{ $locale === 'fr' ? 'Mandat de 2 ans renouvelable une fois, selon un principe de rotation entre institutions membres.' : '2-year term renewable once, following a rotation principle between member institutions.' }}</p>
-                </div>
-
-                <div class="bg-white border border-rased-900/10 rounded-2xl shadow-sm p-7">
-                    <p class="text-xs font-bold text-gold-700 uppercase tracking-wide mb-1">{{ $locale === 'fr' ? 'Vice-présidences' : 'Vice-Presidencies' }}</p>
-                    <p class="font-display font-bold text-rased-950 text-lg mb-1">{{ $locale === 'fr' ? '3 Vice-présidents régionaux' : '3 Regional Vice-Presidents' }}</p>
-                    <p class="text-sm text-rased-900/65">{{ $locale === 'fr' ? 'Un représentant par grande région assiste le Président et assure la coordination avec les institutions membres.' : 'One representative per sub-region assists the President and ensures coordination with member institutions.' }}</p>
-                </div>
-
-                <div class="bg-white border border-rased-900/10 rounded-2xl shadow-sm p-7">
-                    <p class="text-xs font-bold text-gold-700 uppercase tracking-wide mb-1">{{ $locale === 'fr' ? 'Organe exécutif' : 'Executive Body' }}</p>
-                    <p class="font-display font-bold text-rased-950 text-lg mb-1">{{ $locale === 'fr' ? 'Comité de coordination' : 'Coordination Committee' }}</p>
-                    <p class="text-sm text-rased-900/65">{{ $locale === 'fr' ? 'Président, Vice-présidents, Secrétaire général, Trésorier général et Présidents des 6 commissions. Se réunit au moins deux fois par an.' : 'President, Vice-Presidents, Secretary-General, Treasurer-General & Commission Chairs. Meets at least twice a year.' }}</p>
-                </div>
-
-                <div class="bg-white border border-rased-900/10 rounded-2xl shadow-sm p-7">
-                    <div class="flex items-start gap-4 mb-1">
-                        <img src="{{ asset('rased-sg-portrait.jpeg') }}" alt="Abdallahi El Kerim" class="w-12 h-12 rounded-full object-cover shrink-0 border border-rased-900/10">
-                        <div>
-                            <p class="text-xs font-bold text-gold-700 uppercase tracking-wide mb-1">{{ $locale === 'fr' ? 'Organe administratif' : 'Administrative Body' }}</p>
-                            <p class="font-display font-bold text-rased-950 text-lg leading-snug">Abdallahi El Kerim</p>
+            <div class="grid md:grid-cols-2 gap-6 mb-10">
+                {{-- Présidence --}}
+                <div class="bg-white border border-rased-900/10 rounded-3xl p-7 sm:p-8 shadow-xs hover:shadow-md transition-all flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-start justify-between gap-4 mb-4">
+                            <div>
+                                <span class="inline-block text-[11px] font-bold uppercase tracking-[0.16em] text-gold-700 bg-gold-50 border border-gold-400/30 px-3 py-1 rounded-full mb-3">{{ $locale === 'fr' ? 'Présidence' : 'Presidency' }}</span>
+                                <h3 class="font-display text-xl sm:text-2xl font-extrabold text-rased-950">Pr Abdellatif Kidai</h3>
+                                <p class="text-xs sm:text-sm font-medium text-rased-700 mt-1">{{ $locale === 'fr' ? 'Doyen de la Faculté des Sciences de l’Éducation · Université Mohammed V, Rabat' : 'Dean of the Faculty of Education Sciences · Mohammed V University, Rabat' }}</p>
+                            </div>
+                            @if ($president?->photo)
+                                <img src="{{ asset($president->photo) }}" alt="Pr Abdellatif Kidai" class="w-16 h-16 rounded-2xl object-cover border-2 border-ivory-100 shadow-sm shrink-0">
+                            @endif
                         </div>
+                        <p class="text-sm text-rased-900/70 leading-relaxed mb-5">{{ $locale === 'fr' ? 'Représente officiellement le RASED, préside les instances dirigeantes et veille à l’exécution des orientations votées par l’Assemblée générale.' : 'Officially represents RASED, chairs governing sessions, and oversees implementation of strategic orientations adopted by the General Assembly.' }}</p>
                     </div>
-                    <p class="text-xs text-rased-900/55 mb-3">{{ $locale === 'fr' ? 'Secrétaire général · ENS de Nouakchott' : 'Secretary-General · ENS Nouakchott' }}</p>
-                    <p class="text-sm text-rased-900/65">{{ $locale === 'fr' ? 'Gestion quotidienne du Réseau, conservation des archives statutaires. Directeur de la Formation et de la coopération à l’ENS de Nouakchott depuis 1988.' : 'Daily Network operations and statutory records. Director of Training and Cooperation at ENS Nouakchott since 1988.' }}</p>
+                    <div class="pt-4 border-t border-rased-900/10 flex flex-wrap items-center justify-between gap-3">
+                        <span class="text-xs text-rased-900/55 font-medium">{{ $locale === 'fr' ? 'Mandat de 2 ans renouvelable une fois · Principe de rotation entre institutions membres' : '2-year term renewable once · Rotating presidency among member institutions' }}</span>
+                        @if ($president)
+                            <a href="{{ route('membres') }}#membre-{{ $president->id }}" class="text-xs font-bold text-rased-700 hover:text-rased-950">{{ $locale === 'fr' ? 'Profil détaillé →' : 'Full profile →' }}</a>
+                        @endif
+                    </div>
+                </div>
+
+                {{-- Vice-présidences --}}
+                <div class="bg-white border border-rased-900/10 rounded-3xl p-7 sm:p-8 shadow-xs hover:shadow-md transition-all flex flex-col justify-between">
+                    <div>
+                        <span class="inline-block text-[11px] font-bold uppercase tracking-[0.16em] text-gold-700 bg-gold-50 border border-gold-400/30 px-3 py-1 rounded-full mb-3">{{ $locale === 'fr' ? 'Vice-présidences' : 'Vice-Presidencies' }}</span>
+                        <h3 class="font-display text-xl sm:text-2xl font-extrabold text-rased-950">{{ $locale === 'fr' ? '3 Vice-présidents régionaux' : '3 Regional Vice-Presidents' }}</h3>
+                        <p class="text-xs sm:text-sm font-medium text-rased-700 mt-1 mb-5">{{ $locale === 'fr' ? 'Représentation équilibrée par grande région géographique du Réseau' : 'Balanced representation across the Network’s major African sub-regions' }}</p>
+                        <p class="text-sm text-rased-900/70 leading-relaxed mb-5">{{ $locale === 'fr' ? 'Un représentant par grande région assiste le Président dans ses fonctions diplomatiques et scientifiques et assure l’animation directe avec les institutions membres.' : 'One representative per sub-region assists the President and ensures close operational coordination with regional member institutions.' }}</p>
+                    </div>
+                    <div class="pt-4 border-t border-rased-900/10">
+                        <span class="text-xs text-rased-900/55 font-medium">{{ $locale === 'fr' ? 'Règlement intérieur · Coordination inter-régionale' : 'Internal Bylaws · Inter-regional coordination' }}</span>
+                    </div>
+                </div>
+
+                {{-- Comité de coordination --}}
+                <div class="bg-white border border-rased-900/10 rounded-3xl p-7 sm:p-8 shadow-xs hover:shadow-md transition-all flex flex-col justify-between">
+                    <div>
+                        <span class="inline-block text-[11px] font-bold uppercase tracking-[0.16em] text-gold-700 bg-gold-50 border border-gold-400/30 px-3 py-1 rounded-full mb-3">{{ $locale === 'fr' ? 'Organe exécutif' : 'Executive Body' }}</span>
+                        <h3 class="font-display text-xl sm:text-2xl font-extrabold text-rased-950">{{ $locale === 'fr' ? 'Comité de coordination' : 'Coordination Committee' }}</h3>
+                        <p class="text-xs sm:text-sm font-medium text-rased-700 mt-1 mb-5">{{ $locale === 'fr' ? 'Président, Vice-présidents, Secrétaire général, Trésorier général & Présidents des 6 commissions' : 'President, Vice-Presidents, Secretary-General, Treasurer-General & Chairs of the 6 Commissions' }}</p>
+                        <p class="text-sm text-rased-900/70 leading-relaxed mb-5">{{ $locale === 'fr' ? 'Pilote la mise en œuvre opérationnelle du programme scientifique annuel, examine les candidatures d’adhésion et coordonne les travaux inter-commissions.' : 'Steers execution of the annual scientific roadmap, reviews institutional membership applications, and aligns commission deliverables.' }}</p>
+                    </div>
+                    <div class="pt-4 border-t border-rased-900/10">
+                        <span class="text-xs text-rased-900/55 font-medium">{{ $locale === 'fr' ? 'Se réunit au moins deux fois par an en session ordinaire' : 'Meets at least twice a year in ordinary session' }}</span>
+                    </div>
+                </div>
+
+                {{-- Secrétariat général --}}
+                <div class="bg-white border border-rased-900/10 rounded-3xl p-7 sm:p-8 shadow-xs hover:shadow-md transition-all flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-start justify-between gap-4 mb-4">
+                            <div>
+                                <span class="inline-block text-[11px] font-bold uppercase tracking-[0.16em] text-gold-700 bg-gold-50 border border-gold-400/30 px-3 py-1 rounded-full mb-3">{{ $locale === 'fr' ? 'Organe administratif' : 'Administrative Body' }}</span>
+                                <h3 class="font-display text-xl sm:text-2xl font-extrabold text-rased-950">Abdallahi El Kerim</h3>
+                                <p class="text-xs sm:text-sm font-medium text-rased-700 mt-1">{{ $locale === 'fr' ? 'Secrétaire général du RASED · ENS de Nouakchott' : 'Secretary-General of RASED · ENS Nouakchott' }}</p>
+                            </div>
+                            @if ($secretaryGeneral?->photo)
+                                <img src="{{ asset($secretaryGeneral->photo) }}" alt="Abdallahi El Kerim" class="w-16 h-16 rounded-2xl object-cover border-2 border-ivory-100 shadow-sm shrink-0">
+                            @endif
+                        </div>
+                        <p class="text-sm text-rased-900/70 leading-relaxed mb-5">{{ $locale === 'fr' ? 'Assure la gestion quotidienne du Réseau, la conservation des archives statutaires et le suivi administratif. Directeur de la Formation et de la coopération à l’ENS de Nouakchott depuis 1988.' : 'Manages daily Network operations, statutory records, and institutional follow-up. Director of Training and Cooperation at ENS Nouakchott since 1988.' }}</p>
+                    </div>
+                    <div class="pt-4 border-t border-rased-900/10 flex flex-wrap items-center justify-between gap-3">
+                        <span class="text-xs text-rased-900/55 font-medium">{{ $locale === 'fr' ? 'Nommé par l’Assemblée générale · Mandat de 4 ans renouvelable une fois' : 'Appointed by the General Assembly · 4-year term renewable once' }}</span>
+                        @if ($secretaryGeneral)
+                            <a href="{{ route('membres') }}#membre-{{ $secretaryGeneral->id }}" class="text-xs font-bold text-rased-700 hover:text-rased-950">{{ $locale === 'fr' ? 'Profil détaillé →' : 'Full profile →' }}</a>
+                        @endif
+                    </div>
                 </div>
             </div>
+
+            {{-- STRIP MEMBRES EN DIRECT --}}
+            @if ($members->isNotEmpty())
+                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    @foreach ($members as $m)
+                        <a href="{{ route('membres') }}#membre-{{ $m->id }}" class="group text-left rounded-2xl bg-white/95 border border-rased-900/10 p-4 hover:border-gold-500/60 hover:shadow-md transition-all flex items-center gap-3.5">
+                            @if ($m->photo)
+                                <img src="{{ asset($m->photo) }}" alt="{{ $m->name }}" class="w-12 h-12 rounded-xl object-cover shrink-0 border border-rased-900/10">
+                            @else
+                                <div class="w-12 h-12 rounded-xl bg-rased-900 text-gold-400 font-display font-bold text-sm flex items-center justify-center shrink-0">
+                                    {{ collect(explode(' ', $m->name))->map(fn ($w) => mb_substr($w, 0, 1))->join('') }}
+                                </div>
+                            @endif
+                            <div class="min-w-0">
+                                <p class="text-[10px] font-bold uppercase tracking-wider text-gold-700 truncate">{{ $locale === 'fr' ? $m->category_fr : $m->category_en }} · {{ $m->country_code }}</p>
+                                <p class="font-display font-bold text-sm text-rased-950 truncate group-hover:text-rased-700">{{ $m->name }}</p>
+                                <p class="text-xs text-rased-900/60 truncate">{{ $m->place }}</p>
+                            </div>
+                        </a>
+                    @endforeach
+                </div>
+            @endif
         </div>
     </section>
 

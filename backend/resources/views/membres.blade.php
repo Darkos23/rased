@@ -32,7 +32,7 @@
                     @php
                         $group = in_array($m->category_fr, ['Présidence', 'Secrétariat général']) ? 'governance' : 'founders';
                     @endphp
-                    <div x-show="filter === 'all' || filter === '{{ $group }}'" class="passport-scene h-[420px]">
+                    <div id="membre-{{ $m->id }}" x-show="filter === 'all' || filter === '{{ $group }}'" class="passport-scene h-[420px]">
                         <div class="passport-flipper relative w-full h-full" :class="flipped[{{ $m->id }}] && 'is-flipped'">
                             {{-- FRONT --}}
                             <div class="passport-face absolute inset-0 rounded-2xl overflow-hidden bg-rased-900 text-white shadow-lg flex flex-col">

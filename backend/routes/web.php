@@ -43,7 +43,11 @@ Route::get('/', function () {
         ->sortBy('rank')
         ->values();
 
-    return view('home', compact('heroArticle', 'heroMeeting', 'listArticles', 'listMeetings', 'stats', 'heroSlides', 'hubs'));
+    $members = \App\Models\Member::orderBy('rank')->take(8)->get();
+    $president = $members->firstWhere('category_fr', 'Présidence');
+    $secretaryGeneral = $members->firstWhere('category_fr', 'Secrétariat général');
+
+    return view('home', compact('heroArticle', 'heroMeeting', 'listArticles', 'listMeetings', 'stats', 'heroSlides', 'hubs', 'members', 'president', 'secretaryGeneral'));
 })->name('home');
 
 Route::get('/lang/{locale}', function (string $locale) {
