@@ -547,22 +547,34 @@ $dateFmt = fn ($date, $opts = []) => $date->locale($locale)->isoFormat($opts['fo
         </div>
     </section>
 
-    {{-- CTA --}}
-    <section class="max-w-7xl mx-auto px-4 md:px-8 py-24">
-        <div class="relative bg-rased-900 rounded-3xl overflow-hidden py-20 px-8 md:px-16 text-center">
-            <div class="absolute top-0 right-0 w-80 h-80 rounded-full bg-rased-500/20 blur-3xl -mr-20 -mt-20"></div>
-            <div class="absolute bottom-0 left-0 w-80 h-80 rounded-full bg-gold-400/20 blur-3xl -ml-20 -mb-20"></div>
-            <div class="relative z-10 max-w-xl mx-auto">
-                <p class="text-xs font-bold text-rased-200 uppercase tracking-widest mb-4">RASED · {{ $locale === 'fr' ? 'Réseau panafricain' : 'Pan-African Network' }}</p>
-                <h2 class="font-display text-4xl md:text-5xl font-extrabold text-white leading-tight mb-4">
-                    @foreach (explode("\n", __('home.cta_title')) as $i => $line)
-                        {{ $line }}@if ($i === 0)<br>@endif
-                    @endforeach
-                </h2>
-                <p class="text-rased-200/80 text-base leading-relaxed mb-8">{{ __('home.cta_sub') }}</p>
-                <div class="flex flex-col sm:flex-row gap-3 justify-center">
-                    <a href="{{ route('register') }}" class="inline-block px-8 py-4 bg-gold-500 text-rased-950 rounded-full font-bold text-base hover:bg-gold-400 hover:-translate-y-0.5 transition-all">{{ $locale === 'fr' ? 'Adhérer au réseau RASED' : 'Join the RASED network' }}</a>
-                    <a href="{{ route('articles.create') }}" class="inline-block px-8 py-4 bg-white/10 border border-white/20 text-white rounded-full font-bold text-base hover:bg-white/15 transition-all">{{ $locale === 'fr' ? 'Soumettre une publication' : 'Submit a publication' }}</a>
+    {{-- CTA FINAL --}}
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+        <div class="relative rounded-[2rem] overflow-hidden bg-rased-950 text-white border border-rased-800 shadow-2xl">
+            <img src="{{ asset('rased-symposium.png') }}" alt="" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover opacity-22 mix-blend-luminosity">
+            <div class="absolute inset-0 bg-gradient-to-r from-rased-950 via-rased-950/92 to-rased-900/80"></div>
+
+            <div class="relative z-10 px-7 py-14 sm:px-14 sm:py-20 grid lg:grid-cols-12 gap-10 items-center">
+                <div class="lg:col-span-8">
+                    <div class="flex items-center gap-3 mb-5">
+                        <img src="{{ asset('rased-logo.png') }}" alt="RASED" class="h-8 w-auto">
+                        <span class="text-xs font-bold uppercase tracking-[0.2em] text-gold-400">RASED · {{ $locale === 'fr' ? 'Réseau panafricain' : 'Pan-African Network' }}</span>
+                    </div>
+                    <h2 class="font-display text-3xl sm:text-5xl font-extrabold leading-[1.08] mb-4">
+                        @foreach (explode("\n", __('home.cta_title')) as $i => $line)
+                            @if ($i === 1)<span class="text-gold-400">{{ $line }}</span>@else {{ $line }}<br>@endif
+                        @endforeach
+                    </h2>
+                    <p class="text-sm sm:text-base text-white/75 max-w-2xl leading-relaxed">{{ __('home.cta_sub') }}</p>
+                </div>
+
+                <div class="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3 lg:items-end">
+                    <a href="{{ route('register') }}" class="w-full sm:w-auto lg:w-full inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full bg-gold-500 text-rased-950 font-bold text-sm hover:bg-gold-400 transition-all shadow-lg whitespace-nowrap">
+                        <span>{{ $locale === 'fr' ? 'Adhérer au réseau RASED' : 'Apply for RASED Membership' }}</span>
+                        <span aria-hidden="true">↗</span>
+                    </a>
+                    <a href="{{ route('articles.create') }}" class="w-full sm:w-auto lg:w-full inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full bg-white/10 border border-white/20 text-white font-bold text-sm hover:bg-white/18 transition-all whitespace-nowrap">
+                        <span>{{ $locale === 'fr' ? 'Soumettre une publication' : 'Submit a Publication' }}</span>
+                    </a>
                 </div>
             </div>
         </div>
