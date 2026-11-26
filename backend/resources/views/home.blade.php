@@ -169,41 +169,71 @@ $dateFmt = fn ($date, $opts = []) => $date->locale($locale)->isoFormat($opts['fo
         </div>
     </section>
 
-    {{-- ANCRAGE CONTINENTAL --}}
+    {{-- ANCRAGE CONTINENTAL — carte interactive --}}
+    @php
+        $hubCoords = ['MAR' => [222, 88], 'MRT' => [145, 198], 'SEN' => [128, 248]];
+    @endphp
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 lg:pb-24">
-        <p class="text-xs font-bold text-rased-600 uppercase tracking-[0.18em] mb-2">{{ $locale === 'fr' ? 'Ancrage continental' : 'Continental Footprint' }}</p>
+        <p class="text-xs font-bold text-rased-600 uppercase tracking-[0.18em] mb-2">{{ $locale === 'fr' ? 'Ancrage continental interactif' : 'Interactive Continental Hub' }}</p>
         <h2 class="font-display text-3xl sm:text-4xl font-extrabold text-rased-950 leading-tight mb-10 max-w-2xl">{{ $locale === 'fr' ? 'Trois institutions fondatrices, une dynamique panafricaine' : 'Three Founding Institutions, One Pan-African Momentum' }}</h2>
 
-        <div class="grid md:grid-cols-3 gap-5">
-            <div class="bg-white border border-rased-900/10 rounded-2xl p-6">
-                <p class="text-xs font-bold text-gold-700 mb-2">Rabat · MAR</p>
-                <h3 class="font-display font-bold text-rased-950 mb-1">Faculté des Sciences de l’Éducation · Université Mohammed V</h3>
-                <p class="text-sm text-rased-900/65 mb-3">Pr Abdellatif Kidai — {{ $locale === 'fr' ? 'Doyen de la FSE · Président en exercice du RASED' : 'Dean of FSE · Sitting President of RASED' }}</p>
-                <div class="flex flex-wrap gap-1.5">
-                    @foreach (['Politiques éducatives', 'Formation doctorale', 'Innovation pédagogique'] as $tag)
-                        <span class="text-[10px] px-2 py-1 rounded-full bg-rased-50 text-rased-700">{{ $tag }}</span>
+        <div x-data="{ active: '{{ $hubs->first()?->country_code }}' }" class="rounded-3xl overflow-hidden border border-rased-900/10 grid lg:grid-cols-12">
+            {{-- MAP --}}
+            <div class="lg:col-span-7 relative p-6 sm:p-9 bg-gradient-to-br from-rased-900 via-rased-950 to-rased-950">
+                <svg viewBox="0 0 540 360" class="w-full h-auto max-h-[345px] select-none">
+                    <path d="M212,48 L268,42 L322,56 L368,62 L404,82 L426,122 L456,158 L442,202 L408,246 L388,308 L350,342 L316,334 L298,288 L280,248 L244,244 L204,258 L162,256 L128,248 L122,222 L138,186 L154,146 L182,102 L202,68 Z" fill="rgba(44,106,91,0.25)" stroke="rgba(188,224,214,0.3)" stroke-width="1.4" />
+
+                    @foreach ($hubs as $h)
+                        @php [$x, $y] = $hubCoords[$h->country_code] ?? [0, 0]; @endphp
+                        <g @click="active = '{{ $h->country_code }}'" class="cursor-pointer">
+                            <circle cx="{{ $x }}" cy="{{ $y }}" r="30" fill="url(#hubGlow)" x-show="active === '{{ $h->country_code }}'"></circle>
+                            <circle cx="{{ $x }}" cy="{{ $y }}" r="8" :fill="active === '{{ $h->country_code }}' ? '#cfa952' : '#0d2621'" stroke="#cfa952" stroke-width="2"></circle>
+                            <circle cx="{{ $x }}" cy="{{ $y }}" r="2.8" :fill="active === '{{ $h->country_code }}' ? '#0d2621' : '#ffffff'"></circle>
+                            <text x="{{ $x + 12 }}" y="{{ $y + 4 }}" fill="#ffffff" font-size="10.5" font-weight="700" font-family="Outfit, sans-serif">{{ $h->place }}</text>
+                        </g>
+                    @endforeach
+
+                    <defs>
+                        <radialGradient id="hubGlow" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stop-color="#cfa952" stop-opacity="0.48" />
+                            <stop offset="100%" stop-color="#cfa952" stop-opacity="0" />
+                        </radialGradient>
+                    </defs>
+                </svg>
+
+                <div class="flex flex-wrap gap-2 pt-2">
+                    @foreach ($hubs as $h)
+                        <button type="button" @click="active = '{{ $h->country_code }}'" :class="active === '{{ $h->country_code }}' ? 'bg-gold-500 text-rased-950' : 'bg-white/10 text-white/75 border border-white/10'" class="px-3.5 py-2 rounded-xl text-xs font-semibold transition-all">
+                            <span class="font-mono text-[10px] opacity-80">{{ $h->country_code }}</span>
+                            {{ $locale === 'fr' ? $h->institution_fr : $h->institution_en }}
+                        </button>
                     @endforeach
                 </div>
             </div>
-            <div class="bg-white border border-rased-900/10 rounded-2xl p-6">
-                <p class="text-xs font-bold text-gold-700 mb-2">Nouakchott · MRT</p>
-                <h3 class="font-display font-bold text-rased-950 mb-1">École Normale Supérieure de Nouakchott</h3>
-                <p class="text-sm text-rased-900/65 mb-3">Pr Mohamed Aly Louly — {{ $locale === 'fr' ? 'Directeur de l’ENS · Siège de l’acte de signature' : 'Director of ENS · Host of the Founding Signing' }}</p>
-                <div class="flex flex-wrap gap-1.5">
-                    @foreach (['Formation des formateurs', 'Coopération régionale', 'Ingénierie curriculaire'] as $tag)
-                        <span class="text-[10px] px-2 py-1 rounded-full bg-rased-50 text-rased-700">{{ $tag }}</span>
-                    @endforeach
-                </div>
-            </div>
-            <div class="bg-white border border-rased-900/10 rounded-2xl p-6">
-                <p class="text-xs font-bold text-gold-700 mb-2">Dakar · SEN</p>
-                <h3 class="font-display font-bold text-rased-950 mb-1">FASTEF · Université Cheikh Anta Diop</h3>
-                <p class="text-sm text-rased-900/65 mb-3">Pr Moustapha Sokhna — {{ $locale === 'fr' ? 'Doyen de la FASTEF · Université Cheikh Anta Diop' : 'Dean of FASTEF · Cheikh Anta Diop University' }}</p>
-                <div class="flex flex-wrap gap-1.5">
-                    @foreach (['Didactique des disciplines', 'Technologies éducatives', 'Recherche collaborative'] as $tag)
-                        <span class="text-[10px] px-2 py-1 rounded-full bg-rased-50 text-rased-700">{{ $tag }}</span>
-                    @endforeach
-                </div>
+
+            {{-- INFO PANEL (dynamique) --}}
+            <div class="lg:col-span-5 p-7 sm:p-9 bg-rased-900/90 text-white flex flex-col justify-center">
+                @foreach ($hubs as $h)
+                    <div x-show="active === '{{ $h->country_code }}'" x-cloak>
+                        <span class="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-gold-400 mb-4">📍 {{ $h->place }}</span>
+                        <h3 class="font-display text-2xl font-bold text-white leading-snug mb-3">{{ $locale === 'fr' ? $h->institution_fr : $h->institution_en }}</h3>
+                        <div class="p-4 rounded-2xl bg-white/5 border border-white/10 mb-5">
+                            <p class="text-[11px] uppercase tracking-[0.14em] text-white/50 mb-1">{{ $locale === 'fr' ? 'Autorité académique signataire' : 'Signatory Academic Authority' }}</p>
+                            <p class="font-display text-lg font-bold text-gold-400">{{ $h->name }}</p>
+                            <p class="text-xs text-white/75 mt-0.5">{{ $locale === 'fr' ? $h->role_fr : $h->role_en }}</p>
+                        </div>
+                        @if ($h->tags)
+                            <div>
+                                <p class="text-[11px] uppercase tracking-[0.14em] text-white/50 mb-2.5">{{ $locale === 'fr' ? 'Axes d’excellence & coopération' : 'Core Research & Training Pillars' }}</p>
+                                <div class="flex flex-wrap gap-2">
+                                    @foreach ($h->tags as $tag)
+                                        <span class="px-3 py-1 rounded-full bg-rased-800/90 border border-rased-600/50 text-xs text-rased-100">{{ $tag }}</span>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+                @endforeach
             </div>
         </div>
     </section>

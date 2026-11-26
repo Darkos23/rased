@@ -36,7 +36,14 @@ Route::get('/', function () {
 
     $heroSlides = \App\Models\HeroSlide::orderBy('order')->get();
 
-    return view('home', compact('heroArticle', 'heroMeeting', 'listArticles', 'listMeetings', 'stats', 'heroSlides'));
+    $hubs = \App\Models\Member::whereIn('category_fr', ['Présidence', 'Membre fondateur'])
+        ->where('country_code', '!=', null)
+        ->get()
+        ->unique('country_code')
+        ->sortBy('rank')
+        ->values();
+
+    return view('home', compact('heroArticle', 'heroMeeting', 'listArticles', 'listMeetings', 'stats', 'heroSlides', 'hubs'));
 })->name('home');
 
 Route::get('/lang/{locale}', function (string $locale) {
